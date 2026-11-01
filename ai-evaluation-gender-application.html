@@ -1,0 +1,220 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>AI 평가와 지원 결정의 성차</title><meta name="description" content="AI 평가와 지원 결정의 성차 · 인터랙티브 슬라이드"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script><style>/* Minimal keynote theme: black stage, one idea per slide, one accent. Light variant follows the OS. */
+:root{--bg:#000;--fg:#f5f5f7;--fg2:#a1a1a6;--ac:#2997ff;--ac2:#ff9f0a;--tr:#1c1c1e;--ln:#3a3a3c;--e:cubic-bezier(.2,.8,.2,1);color-scheme:dark}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#fff;--fg:#1d1d1f;--fg2:#6e6e73;--ac:#0071e3;--ac2:#c93400;--tr:#f2f2f7;--ln:#d2d2d7;color-scheme:light}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;overflow:hidden;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+#deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;display:flex;overflow-y:auto;overflow-x:hidden;padding:clamp(24px,6vw,96px) clamp(20px,6vw,96px) clamp(64px,10vh,96px);opacity:0;visibility:hidden;transform:scale(.985);transition:opacity .7s var(--e),transform .9s var(--e),visibility 0s linear .7s}
+.slide.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.in{margin:auto;width:min(1080px,100%);display:grid;gap:clamp(16px,3.2vh,32px)}
+.in.c{text-align:center;justify-items:center}
+h1,h2,h3,h4,p{margin:0}
+h1{font-size:clamp(34px,8vw,92px);font-weight:800;line-height:1.1;letter-spacing:-.035em;text-wrap:balance}
+h2{font-size:clamp(30px,6.4vw,76px);font-weight:700;line-height:1.15;letter-spacing:-.03em;text-wrap:balance}
+h3{font-size:clamp(22px,3.6vw,40px);font-weight:700;line-height:1.25;letter-spacing:-.02em;text-wrap:balance}
+.kick{font-size:clamp(13px,1.6vw,16px);font-weight:600;color:var(--ac);letter-spacing:.02em}
+.sub{font-size:clamp(16px,2.3vw,26px);line-height:1.5;color:var(--fg2);max-width:30em;text-wrap:pretty}
+.note{font-size:clamp(13px,1.5vw,15px);line-height:1.6;color:var(--fg2);max-width:46em}
+.pill{display:inline-block;border:1px solid var(--ln);color:var(--fg2);border-radius:999px;padding:6px 16px;font-size:14px}
+.big{font-size:clamp(72px,19vw,230px);font-weight:800;line-height:1;letter-spacing:-.045em;color:var(--ac);font-variant-numeric:tabular-nums}
+.unit{font-size:clamp(22px,4vw,48px);font-weight:600;color:var(--fg2);margin-left:.25em}
+/* reveal */
+.r{opacity:0;transform:translateY(26px);filter:blur(8px);transition:opacity .9s var(--e),transform .9s var(--e),filter .9s var(--e);transition-delay:calc(var(--i,0)*.14s + .2s)}
+.on .r{opacity:1;transform:none;filter:none}
+.w{display:inline-block}
+/* bars (the preferred motion) */
+.bars{display:grid;gap:clamp(14px,2.6vh,26px);width:100%}
+.br{display:grid;grid-template-columns:minmax(120px,240px) 1fr auto;gap:8px 20px;align-items:center}
+.bl{font-size:clamp(15px,2vw,22px);font-weight:500}
+.bar{height:12px;border-radius:6px;background:var(--tr);overflow:hidden}
+.bar>i{display:block;height:100%;width:0;border-radius:6px;background:var(--c,var(--ac));transition:width 1.5s var(--e) calc(var(--i,0)*.16s + .6s)}
+.on .bar>i{width:var(--w)}
+.bv{font-size:clamp(18px,2.6vw,30px);font-weight:700;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.br{grid-template-columns:1fr auto}.br .bl{grid-column:1/-1}}
+.cw{position:relative;width:100%;height:clamp(240px,46vh,420px)}
+.cw.sq{max-width:420px;height:clamp(220px,40vh,360px);margin-inline:auto}
+/* flow */
+.fl{display:flex;flex-wrap:wrap;align-items:stretch;justify-content:center;gap:12px;width:100%}
+.fs{flex:1 1 220px;max-width:340px;display:grid;gap:6px;align-content:start;padding:20px;border-radius:20px;background:var(--tr);text-align:left}
+.fs b{font-size:clamp(18px,2.4vw,26px);line-height:1.3}
+.fs span{font-size:15px;line-height:1.55;color:var(--fg2)}
+.ar{align-self:center;font-size:28px;color:var(--ac)}
+@media (max-width:760px){.ar{transform:rotate(90deg);width:100%;text-align:center}.on .ar{transform:rotate(90deg)}.fs{max-width:none}}
+/* compare */
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;width:100%}
+.cp{padding:clamp(18px,3vw,32px);border-radius:24px;background:var(--tr);display:grid;gap:14px;align-content:start}
+.cp h4{font-size:clamp(18px,2.4vw,26px);font-weight:700}
+.cp.yes h4{color:var(--ac)}.cp.no h4{color:var(--ac2)}
+.cp ul{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.cp li{font-size:clamp(15px,1.9vw,19px);line-height:1.5;padding-left:18px;position:relative}
+.cp li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.5}
+/* checks */
+.cks{display:grid;gap:14px;width:100%}
+.ck{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:18px 22px;border-radius:20px;background:var(--tr)}
+.ck b{font-size:clamp(16px,2.2vw,24px);font-weight:600;line-height:1.4}
+.ck span.s{display:block;font-size:14px;color:var(--fg2);font-weight:400;margin-top:2px}
+.mk{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--bg);background:var(--ac);transform:scale(0);transition:transform .6s var(--e) calc(var(--i,0)*.14s + .6s)}
+.mk.n{background:var(--ac2)}
+.on .mk{transform:scale(1)}
+/* illustrations */
+.cap2{font-size:clamp(13px,1.5vw,15px);color:var(--fg2);text-align:center;max-width:44em;margin-inline:auto;line-height:1.6}
+.pgs{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,64px);justify-content:center;width:100%}
+.pg{flex:1 1 280px;max-width:560px;display:grid;gap:14px}
+.pg svg{width:100%;height:auto;display:block}
+.pg .dg{opacity:0;transition:opacity 1.2s var(--e) .3s}.on .pg .dg{opacity:1}
+.pg .hi circle{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(0)}
+.on .pg .hi circle{animation:pop .5s var(--e) both;animation-delay:calc(var(--d,0)*1ms + .9s)}
+@keyframes pop{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+.pc{display:grid;gap:4px;text-align:center}.pn{font-size:clamp(34px,6vw,64px);font-weight:800;color:var(--ac);letter-spacing:-.03em}.pc span{font-size:14px;color:var(--fg2);line-height:1.5}
+.bz{display:grid;gap:0;width:100%}
+.bz .rt{text-align:center;font-size:clamp(17px,2.4vw,26px);font-weight:700}
+.bz svg{width:100%;height:auto;display:block}
+.bz path{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s var(--e) calc(var(--i,0)*.3s + .7s)}
+.on .bz path{stroke-dashoffset:0}
+.bz .lv{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center}
+.bz .lv b{display:block;font-size:clamp(16px,2.2vw,24px)}.bz .lv span{font-size:clamp(13px,1.7vw,17px);color:var(--fg2)}
+.sc2 svg{width:100%;height:auto;display:block;max-width:560px;margin-inline:auto}
+.beam{transform-box:view-box;transform-origin:100px 30px;transition:transform 2s var(--e) 1s}
+.on .beam{transform:rotate(var(--tilt,-8deg))}
+.sc2 .lv{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center}.sc2 .lv b{display:block;font-size:clamp(16px,2.2vw,24px)}.sc2 .lv span{font-size:clamp(13px,1.7vw,17px);color:var(--fg2)}
+.tl{display:grid;gap:18px;width:100%}
+.tln{height:4px;border-radius:2px;background:var(--tr);overflow:hidden}.tln i{display:block;height:100%;width:0;background:var(--ac);transition:width 2.6s var(--e) .6s}.on .tln i{width:100%}
+.tl ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:12px;text-align:center}
+.tl li{display:grid;gap:6px;justify-items:center}.tl li b{font-size:clamp(14px,1.8vw,18px)}.tl li .dt{width:14px;height:14px;border-radius:50%;background:var(--ac)}
+.eyes{display:flex;flex-wrap:wrap;gap:clamp(16px,4vw,48px);justify-content:center;width:100%}
+.ey{flex:1 1 240px;max-width:340px;display:grid;gap:10px;text-align:center}.ey svg{width:100%;height:auto;display:block}.ey b{font-size:clamp(15px,2vw,20px)}
+.ey .sp{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.4s var(--e) 1s}.on .ey .sp{stroke-dashoffset:0}
+.ey .fx{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(0)}.on .ey .fx{animation:pop .5s var(--e) both;animation-delay:calc(var(--d,0)*1ms + 1s)}
+.sh{display:flex;gap:clamp(24px,8vw,96px);justify-content:center;align-items:flex-end;width:100%}
+.shc{flex:1 1 0;max-width:260px;display:grid;gap:12px;text-align:center}
+.sht{position:relative;height:clamp(160px,30vh,260px);border-bottom:1px solid var(--ln)}
+.gh{position:absolute;bottom:0;left:18%;right:18%;border:1.5px dashed var(--ln);border-bottom:0;border-radius:12px 12px 0 0}
+.nw{position:absolute;bottom:0;left:18%;right:18%;height:var(--f);background:var(--c);border-radius:12px 12px 0 0;transition:height 1.8s var(--e) 1s}.on .nw{height:var(--t)}
+.shc b{font-size:clamp(15px,2vw,20px)}
+.st{display:flex;align-items:flex-end;gap:10px;height:clamp(200px,36vh,320px);width:100%}
+.stp{flex:1;height:var(--h);border-radius:14px 14px 0 0;background:var(--tr);border-top:3px solid var(--ac);display:flex;align-items:flex-end;padding:14px;font-size:clamp(15px,2vw,22px);font-weight:600}
+.lp svg{width:100%;height:auto;display:block}
+.lp .nd{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.6)}.on .lp .nd{animation:pop .6s var(--e) both;animation-delay:calc(var(--d,0)*1ms + .6s)}
+.lp .rg{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 3s var(--e) .4s}.on .lp .rg{stroke-dashoffset:0}
+.sc{justify-items:start}.sc .ref{font-size:clamp(14px,1.8vw,18px);line-height:1.6;color:var(--fg)}
+.sc a{color:var(--ac);text-decoration:none;font-weight:600}
+/* chrome */
+#ui{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,4vw,40px) calc(14px + env(safe-area-inset-bottom));pointer-events:none}
+#ui>*{pointer-events:auto}
+#ap{font:inherit;font-size:13px;color:var(--fg2);background:transparent;border:1px solid var(--ln);border-radius:999px;padding:7px 14px;cursor:pointer;min-height:36px}
+#ap[aria-pressed="true"]{color:var(--bg);background:var(--fg);border-color:var(--fg)}
+#ap:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+#pg{flex:1;height:3px;border-radius:2px;background:var(--tr);overflow:hidden}#pg i{display:block;height:100%;width:0;background:var(--fg);transition:width .6s var(--e)}
+#ct{font-size:13px;color:var(--fg2);font-variant-numeric:tabular-nums;min-width:3.5em;text-align:right}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.r{opacity:1;transform:none;filter:none}.bar>i{width:var(--w)}.nw{height:var(--t)}.mk{transform:none}.beam{transform:rotate(var(--tilt,-8deg))}.pg .dg,.pg .hi circle,.lp .nd,.ey .fx{opacity:1;transform:none}.bz path,.ey .sp,.lp .rg{stroke-dashoffset:0}.tln i{width:100%}}
+
+.fl.na .fs{flex:1 1 240px;max-width:none}.fs b{display:block}
+.fl.na .fs{padding:clamp(18px,2.4vw,28px)}.fl.na .fs b{font-size:clamp(18px,2.4vw,26px)}.fl.na .fs span{font-size:clamp(15px,1.9vw,20px);line-height:1.55}
+.bz svg{max-height:30vh}.sc2 svg{max-height:34vh}.lp svg{max-height:46vh}
+</style></head><body><main id="deck" aria-live="off"></main><div id="ui"><button id="ap" type="button" aria-pressed="false">▶ 자동 재생</button><div id="pg" aria-hidden="true"><i></i></div><span id="ct"></span></div><script>window.DECK={"slides": [{"t": "title", "k": "Irlenbusch, Rau & Rilke (2026) · IZA Discussion Paper 18517", "h": "AI가 평가한다고 하면, 가장 유리한 사람이 지원을 포기한다", "sub": "경쟁적 채용에서 평가 주체와 성별 공개의 영향", "badge": "IZA 디스커션페이퍼 · 동료심사 전"}, {"t": "say", "h": "한눈에 보는 네 가지", "sub": "LLM이 평가하면 지원율이 떨어졌다 · 여성에게 더 컸다 · 혼합 평가에서도 유지 · 성별 공개는 효과 없음"}, {"t": "say", "h": "서론: 공정한 평가보다 먼저, 누가 지원하는가.", "sub": "알고리즘 채용의 공정성 논의는 평가 단계에 집중해 왔지만, 평가 이전의 공급 측 선택이 평가 주체에 따라 달라지면 이후 모든 단계의 구성이 바뀌어 파이프라인 전체로 증폭됩니다."}, {"t": "pts", "k": "이론적 논의", "h": "두 문헌의 연결", "steps": [{"t": "경쟁 선호의 성차", "d": "실력이 같아도 여성이 경쟁 환경 진입을 더 꺼리는 경향 (실험경제학)"}, {"t": "알고리즘 평가에 대한 태도", "d": "평가받는 사람이 알고리즘을 어떻게 받아들이는가"}, {"t": "공급 측 선택", "d": "누가 지원하는가가 평가 주체에 달라지는가"}, {"t": "질문", "d": "AI 채용의 공정성은 평가 알고리즘의 편향만으로 환원되는가"}]}, {"t": "pts", "k": "용어 풀이 · 해설", "h": "대학생을 위한 용어 풀이", "steps": [{"t": "사전등록", "d": "가설과 분석 계획을 미리 고정"}, {"t": "토너먼트 과제", "d": "경쟁 선호를 재는 Niederle-Vesterlund 과제"}, {"t": "역선택", "d": "실력 대비 부적절한 사람이 더 지원하는 현상"}, {"t": "피험자 간 배정", "d": "각 참가자가 한 조건만 받음"}], "note": "용어 풀이는 이해를 돕기 위한 해설입니다."}, {"t": "pts", "k": "연구문제", "h": "세 가지 질문", "steps": [{"t": "RQ1", "d": "평가 주체가 LLM이면 지원 결정이 달라지는가"}, {"t": "RQ2", "d": "효과는 성별과 경쟁 선호에 따라 다른가"}, {"t": "RQ3", "d": "성별 공개 여부는 지원 결정을 바꾸는가"}]}, {"t": "flow", "k": "방법론", "h": "사전등록 온라인 실험", "steps": [{"t": "경쟁 선호 측정", "d": "토너먼트 과제"}, {"t": "지원서 작성", "d": "텍스트 기반"}, {"t": "네 평가 체제", "d": "사람 단독, LLM 단독, 두 가지 인간 참여 혼합"}, {"t": "성별 공개", "d": "피험자 간 무작위 배정"}, {"t": "분석", "d": "지원율, 객관 점수와 지원 결정의 조합"}]}, {"t": "chk", "k": "결과 1 · 지원율", "h": "LLM이 관여하면 지원이 줄었다", "rows": [{"t": "LLM이 평가에 관여한 모든 체제에서 지원율이 하락했다", "s": null, "m": "y"}, {"t": "효과는 여성에게 더 컸다", "s": null, "m": "y"}, {"t": "혼합 평가에서도 억제 효과는 사라지지 않았다", "s": null, "m": "y"}]}, {"t": "ill", "kind": "scale", "k": "결과 2 · 역설", "h": "가장 유리한 사람이 가장 적게 지원", "sides": [{"l": "비경쟁적 여성", "sub": "순수 AI 평가에서 객관 점수 최고"}, {"l": "같은 집단", "sub": "지원율은 가장 낮음"}], "tilt": -8, "cap": "개념도입니다. 객관 점수와 지원율의 괴리를 형상화했습니다. 체계적인 자신감 부족이 배경입니다."}, {"t": "chk", "k": "결과 3 · 집단별", "h": "선택의 질이 달랐다", "rows": [{"t": "비경쟁적 후보가 효과를 주도했다", "s": null, "m": "y"}, {"t": "경쟁적 남성: 과신에 기반해 지속 지원하는 역선택", "s": null, "m": "y"}, {"t": "경쟁적 여성: AI 평가 하에서 잘 보정된 긍정적 자기선택", "s": null, "m": "y"}, {"t": "성별 공개 여부는 어떤 조건에서도 유의한 효과가 없었다", "s": null, "m": "n"}]}, {"t": "pts", "k": "해설 · 논문에는 없는 내용", "h": "논문에는 없는 내용 1", "steps": [{"t": "공지의 비용", "d": "AI 평가 도입의 공지 자체가 우수한 지원자의 이탈을 유발할 수 있다는 것이 논문의 시사입니다. 공지 방식과 사람 검토의 결합 설계가 인재 확보 전략의 일부가 됩니다."}, {"t": "사람이 끼어도 같다", "d": "지원자에게 중요한 것은 최종 판단에 사람이 관여하는 구조보다 AI가 자신을 평가한다는 사실 자체로 보인다고 저자가 해석합니다."}, {"t": "공정성의 단위", "d": "평가 알고리즘의 공정성에서 파이프라인 전체로 넓혀야 합니다."}], "note": "이 장은 논문의 주장이 아니라 해설자의 해석입니다. 원문과 구분해서 읽어 주세요."}, {"t": "chk", "k": "결론 · 함의", "h": "개입의 방향", "rows": [{"t": "경쟁 회피와 자신감 부족이 겹친 집단이 AI 채용에서 가장 취약하다", "s": null, "m": "y"}, {"t": "AI 평가가 실력을 더 객관적으로 읽어준다는 낙관은 수혜자가 지원해야 성립한다", "s": null, "m": "y"}, {"t": "지원 독려와 자신감 보정을 겨냥한 개입이 AI 평가의 편익을 실현하는 전제가 될 수 있다", "s": null, "m": "y"}]}, {"t": "cmp", "h": "이 연구가 말하는 것, 말하지 않는 것", "l": {"h": "보여주는 것", "items": ["AI 평가가 지원 결정을 바꾼다는 점", "성별 공개보다 평가 주체가 더 큰 영향이라는 점"]}, "r": {"h": "보여주지 않는 것", "items": ["실제 채용 시장의 지원 행동 (온라인 실험)", "성별 공개의 무효과를 다른 설정으로 일반화", "장기 효과와 채용 결과", "동료심사를 거친 확정 결론 (디스커션페이퍼)"]}}, {"t": "pts", "k": "후속 연구", "h": "남은 질문", "steps": [{"t": "현장 검증", "d": "실제 채용 시장"}, {"t": "공지 설계", "d": "AI 사용 알림 방식의 효과"}, {"t": "개입", "d": "자신감 보정의 효과"}]}, {"t": "pts", "k": "생각해 볼 질문 · 해설", "h": "토론해 봅시다", "steps": [{"t": "내가 지원자라면", "d": "AI가 평가한다는 공지에 어떻게 반응할까"}, {"t": "기업", "d": "공지와 사람 검토를 어떻게 설계할까"}, {"t": "공정성", "d": "지원 이전의 왜곡을 누가 책임질까"}], "note": "정답이 없는 질문입니다. 논문의 결론을 넘어서는 생각을 해 보세요."}, {"t": "src", "ref": "Irlenbusch, B., Rau, H. A., & Rilke, R. M. (2026). Human-AI evaluation and gender transparency: Application decisions in competitive hiring (IZA Discussion Paper No. 18517). https://docs.iza.org/dp18517.pdf", "status": "동료심사 전 디스커션페이퍼. 온라인 실험 결과입니다.", "post": "https://donghunc.kr/?p=970"}]};</script><script>(()=>{
+'use strict';
+const D=window.DECK,$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const R=(h,i=0,tag='div',cls='')=>`<${tag} class="r ${cls}" style="--i:${i}">${h}</${tag}>`;
+const words=(t,b=0)=>String(t).split(' ').map((w,k)=>`<span class="r w" style="--i:${(b+k*.45).toFixed(2)}">${esc(w)}</span>`).join(' ');
+const kick=(s,i=0)=>s.k?R(esc(s.k),i,'p','kick'):'';
+const cap=(s,i)=>s.cap?R(esc(s.cap),i,'p','cap2'):'';
+let SI=0;
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+/* ---- illustrations ---- */
+function pict(s){return `<div class="pgs">${s.groups.map((g,gi)=>{
+  const cols=g.cols,rows=Math.ceil(g.total/cols),c=10,r=3.6,id=`gr${SI}_${gi}`,step=Math.min(45,1200/Math.max(1,g.on));
+  let dots='',hi='',defs='';
+  for(let n=0;n<g.total;n++){const x=(n%cols)*c+c/2,y=Math.floor(n/cols)*c+c/2,d=Math.round(n*step);
+    if(n+1<=Math.floor(g.on))hi+=`<circle cx="${x}" cy="${y}" r="${r+.5}" fill="var(--ac)" style="--d:${d}"/>`;
+    else if(n<g.on){const f=(g.on-n).toFixed(3);defs=`<linearGradient id="${id}"><stop offset="${f}" stop-color="var(--ac)"/><stop offset="${f}" stop-color="var(--ln)"/></linearGradient>`;hi+=`<circle cx="${x}" cy="${y}" r="${r+.5}" fill="url(#${id})" style="--d:${d}"/>`}
+    else dots+=`<circle cx="${x}" cy="${y}" r="${r}"/>`}
+  return `<div class="pg r" style="--i:${gi+1}"><svg viewBox="0 0 ${cols*c} ${rows*c}" role="img" aria-label="${esc(g.label)}"><defs>${defs}</defs><g class="dg" fill="var(--ln)">${dots}</g><g class="hi">${hi}</g></svg><div class="pc"><b class="pn">${esc(g.label)}</b><span>${esc(g.cap||'')}</span></div></div>`}).join('')}</div>`}
+function branch(s){return `<div class="bz">${R(esc(s.root),0,'div','rt')}<svg viewBox="0 0 200 100" aria-hidden="true">${s.br.map((b,i)=>{const n=s.br.length,x=n===1?100:30+140*i/(n-1);return `<path d="M100 4 C 100 54, ${x} 46, ${x} 96" stroke="${b.c||'var(--ac)'}" stroke-width="${b.w}" pathLength="1" style="--i:${i}"/>`}).join('')}</svg><div class="lv" style="grid-template-columns:repeat(${s.br.length},1fr)">${s.br.map((b,i)=>R(`<b>${esc(b.l)}</b><span>${esc(b.sub||'')}</span>`,i+3)).join('')}</div></div>`}
+function scale(s){const[l,rr]=s.sides;return `<div class="sc2"><svg viewBox="0 0 200 110" aria-hidden="true"><path d="M100 30 L88 100 L112 100 Z" fill="var(--ln)"/><g class="beam" style="--tilt:${s.tilt||-8}deg"><line x1="20" y1="30" x2="180" y2="30" stroke="var(--fg)" stroke-width="3" stroke-linecap="round"/><path d="M20 30 L8 62 M20 30 L32 62 M180 30 L168 62 M180 30 L192 62" stroke="var(--fg2)" stroke-width="1.2" fill="none"/><path d="M4 62 Q20 76 36 62 Z" fill="var(--ac)"/><path d="M164 62 Q180 76 196 62 Z" fill="var(--ac2)"/></g></svg><div class="lv">${R(`<b>${esc(l.l)}</b><span>${esc(l.sub)}</span>`,1)}${R(`<b>${esc(rr.l)}</b><span>${esc(rr.sub)}</span>`,2)}</div></div>`}
+function timeline(s){return `<div class="tl"><div class="tln r" style="--i:0"><i></i></div><ol>${s.pts.map((p,i)=>`<li class="r" style="--i:${i+1}"><span class="dt"></span><b>${esc(p.l)}</b></li>`).join('')}</ol></div>`}
+function eye(s){const mk=(spread,n,seed,rad,label,gi)=>{const f=rng(seed);let pts=[],pl='',dots='';
+  for(let k=0;k<n;k++){const a=f()*6.283,d=Math.sqrt(f())*spread,x=Math.max(20,Math.min(180,100+Math.cos(a)*d)),y=Math.max(24,Math.min(176,92+Math.sin(a)*d*1.1));pts.push([x,y])}
+  pl=pts.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ');
+  dots=pts.map((p,k)=>`<circle class="fx" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${rad}" fill="var(--ac)" fill-opacity=".85" style="--d:${k*150}"/>`).join('');
+  return `<div class="ey r" style="--i:${gi+1}"><svg viewBox="0 0 200 200" role="img" aria-label="${esc(label)}"><rect x="2" y="2" width="196" height="196" rx="18" fill="var(--tr)" stroke="var(--ln)"/><circle cx="100" cy="82" r="34" fill="none" stroke="var(--ln)" stroke-width="2"/><path d="M40 190 Q100 118 160 190" fill="none" stroke="var(--ln)" stroke-width="2"/><polyline class="sp" points="${pl}" pathLength="1" fill="none" stroke="var(--ac)" stroke-width="1.6" stroke-opacity=".7"/>${dots}</svg><b>${esc(label)}</b></div>`};
+  return `<div class="eyes">${mk(26,7,3,4,s.a,0)}${mk(78,12,9,7,s.b,1)}</div>`}
+function shift(s){return `<div class="sh">${s.items.map((it,i)=>`<div class="shc r" style="--i:${i+1}"><div class="sht"><div class="gh" style="height:${it.f}%"></div><div class="nw" style="--f:${it.f}%;--t:${it.t}%;--c:${it.c==='ac2'?'var(--ac2)':'var(--ac)'}"></div></div><b>${esc(it.l)}</b></div>`).join('')}</div>`}
+function stairs(s){const n=s.steps.length;return `<div class="st">${s.steps.map((p,i)=>`<div class="stp r" style="--i:${i+1};--h:${36+i*(60/Math.max(1,n-1))}%">${esc(p.l)}</div>`).join('')}</div>`}
+function loop(s){const n=s.nodes.length,cx=320,cy=180,rx=215,ry=130;
+  const path=`M${cx-rx} ${cy} a${rx} ${ry} 0 1 1 ${2*rx} 0 a${rx} ${ry} 0 1 1 ${-2*rx} 0`;
+  const nodes=s.nodes.map((t,k)=>{const a=(-90+k*360/n)*Math.PI/180,x=cx+rx*Math.cos(a),y=cy+ry*Math.sin(a);
+    const sp=[...t].map((c,j)=>c===' '?j:-1).filter(j=>j>=0).sort((a,b)=>Math.abs(a-t.length/2)-Math.abs(b-t.length/2))[0],parts=t.length>7&&sp!==undefined?[t.slice(0,sp),t.slice(sp+1)]:[t];
+    const tx=parts.map((p,j)=>`<tspan x="${x.toFixed(1)}" dy="${j?22:(parts.length>1?-2:7)}">${esc(p)}</tspan>`).join('');
+    return `<g class="nd" style="--d:${k*350}"><rect x="${(x-85).toFixed(1)}" y="${(y-30).toFixed(1)}" width="170" height="60" rx="16" fill="var(--tr)" stroke="${k===s.hl?'var(--ac)':'var(--ln)'}" stroke-width="${k===s.hl?2:1}"/><text x="${x.toFixed(1)}" y="${(y-(parts.length>1?8:0)).toFixed(1)}" fill="var(--fg)" font-size="19" font-weight="600" text-anchor="middle">${tx}</text></g>`}).join('');
+  return `<div class="lp"><svg viewBox="0 0 640 360" role="img" aria-label="${esc(s.nodes.join(' → '))}"><path class="rg" d="${path}" pathLength="1" fill="none" stroke="var(--ln)" stroke-width="2"/>${nodes}<circle r="6" fill="var(--ac)"><animateMotion dur="9s" repeatCount="indefinite" path="${path}"/></circle></svg></div>`}
+const ILL={pict,branch,scale,timeline,eye,shift,stairs,loop};
+
+/* ---- slide types ---- */
+const T={
+ title:s=>`<div class="in c">${kick(s,0)}<h1>${words(s.h,1)}</h1>${s.sub?R(esc(s.sub),6,'p','sub'):''}${s.badge?R(`<span class="pill">${esc(s.badge)}</span>`,7):''}</div>`,
+ say:s=>`<div class="in c"><h2>${words(s.h)}</h2>${s.sub?R(esc(s.sub),5,'p','sub'):''}</div>`,
+ num:s=>`<div class="in c">${kick(s,0)}${R(`<span class="big" data-to="${s.n}" data-dec="${s.dec||0}" data-pre="${esc(s.pre||'')}">${esc(s.pre||'')}${s.n}</span><span class="unit">${esc(s.unit||'')}</span>`,1)}${R(esc(s.label),2,'p','sub')}${s.note?R(esc(s.note),3,'p','note'):''}</div>`,
+ bars:s=>`<div class="in">${kick(s,0)}${s.h?R(esc(s.h),0,'h3'):''}<div class="bars">${s.rows.map((r,i)=>`<div class="br r" style="--i:${i+1}"><span class="bl">${esc(r.l)}</span><div class="bar"><i style="--w:${(r.v/s.max*100).toFixed(2)}%;--c:${r.c||'var(--ac)'};--i:${i}"></i></div><b class="bv">${esc(r.show)}</b></div>`).join('')}</div>${s.note?R(esc(s.note),5,'p','note'):''}</div>`,
+ chart:s=>`<div class="in">${kick(s,0)}${R(esc(s.h),0,'h3')}<div class="cw r ${s.kind==='doughnut'?'sq':''}" style="--i:1"><canvas role="img" aria-label="${esc(s.h)}"></canvas></div>${s.note?R(esc(s.note),3,'p','note'):''}</div>`,
+ pts:s=>T.flow(Object.assign({na:1},s)),
+ flow:s=>`<div class="in c">${kick(s,0)}${R(esc(s.h),0,'h3')}<div class="fl${s.na?" na":""}">${s.steps.map((p,i)=>`${i&&!s.na?`<span class="ar r" style="--i:${i+1}">→</span>`:''}<div class="fs r" style="--i:${i+1}"><b>${esc(p.t)}</b><span>${esc(p.d||'')}</span></div>`).join('')}</div>${s.note?R(esc(s.note),5,'p','note'):''}</div>`,
+ cmp:s=>`<div class="in">${R(esc(s.h),0,'h3')}<div class="cmp">${[s.l,s.r].map((p,pi)=>`<div class="cp ${pi?'no':'yes'} r" style="--i:${pi+1}"><h4>${esc(p.h)}</h4><ul>${p.items.map((t,k)=>`<li class="r" style="--i:${pi*3+k+2}">${esc(t)}</li>`).join('')}</ul></div>`).join('')}</div></div>`,
+ chk:s=>`<div class="in">${kick(s,0)}${R(esc(s.h),0,'h3')}<div class="cks">${s.rows.map((r,i)=>`<div class="ck r" style="--i:${i+1}"><span class="mk ${r.m==='n'?'n':''}" style="--i:${i+1}">${r.m==='n'?'✕':'✓'}</span><div><b>${esc(r.t)}</b>${r.s?`<span class="s">${esc(r.s)}</span>`:''}</div></div>`).join('')}</div>${s.note?R(esc(s.note),6,'p','note'):''}</div>`,
+ ill:s=>`<div class="in">${kick(s,0)}${R(esc(s.h),0,'h3')}${ILL[s.kind](s)}${cap(s,6)}</div>`,
+ src:s=>`<div class="in sc">${R('출처',0,'h3')}${R(esc(s.ref),1,'p','ref')}${R(esc(s.status),2,'p','note')}${s.post?R(`<a href="${esc(s.post)}" target="_blank" rel="noopener">블로그 원본 글 보기 →</a>`,3,'p'):''}${R('인포그래픽 제작: donghunc.kr | AI 활용 블로그',4,'p','note')}</div>`
+};
+
+/* ---- charts (Chart.js) ---- */
+const vl={id:'vl',afterDatasetsDraw(ch){const o=ch.options.plugins&&ch.options.plugins.vl;if(!o)return;const x=ch.ctx;x.save();x.fillStyle=o.color;x.font='700 '+o.size+'px '+o.font;x.textBaseline='middle';
+  ch.data.datasets.forEach((d,di)=>{const m=ch.getDatasetMeta(di);m.data.forEach((b,i)=>{const t=d.show&&d.show[i];if(!t)return;
+    if(ch.options.indexAxis==='y'){x.textAlign='left';x.fillText(t,b.x+10,b.y)}else{x.textAlign='center';x.fillText(t,b.x,d.data[i]<0?b.y+16:b.y-14)}})});x.restore()}};
+function mkChart(cv,s,slide){if(typeof Chart==='undefined')return;
+  const cs=getComputedStyle(document.documentElement),col=k=>(cs.getPropertyValue('--'+k).trim()||k),font='Pretendard Variable, Pretendard, sans-serif';
+  const dn=s.kind==='doughnut';
+  const ds=s.datasets.map(d=>({label:d.label,data:d.data,show:d.show,backgroundColor:Array.isArray(d.c)?d.c.map(col):col(d.c||'ac'),borderWidth:0,borderRadius:dn?0:8,borderSkipped:false,barPercentage:.6,categoryPercentage:.8}));
+  const hz=s.axis==='y',val=hz?'x':'y',cat=hz?'y':'x';
+  const opt={responsive:true,maintainAspectRatio:false,animation:{duration:RM?0:1800,easing:'easeOutQuart'},indexAxis:s.axis||'x',layout:{padding:{top:24,right:hz?70:8}},
+    plugins:{legend:{display:!!s.legend,position:'bottom',labels:{color:col('fg2'),font:{family:font,size:14},usePointStyle:true,padding:18}},tooltip:{enabled:true,backgroundColor:col('tr'),titleColor:col('fg'),bodyColor:col('fg2'),borderColor:col('ln'),borderWidth:1,titleFont:{family:font},bodyFont:{family:font}},vl:{color:col('fg'),size:17,font}}};
+  if(dn){opt.cutout='76%';opt.layout={padding:8};opt.plugins.vl=undefined}
+  else{opt.scales={[cat]:{grid:{display:false},border:{display:false},ticks:{color:col('fg2'),font:{family:font,size:14}}},[val]:{display:false,min:s.min||0,max:s.max}}}
+  const c=new Chart(cv,{type:s.kind==='line'?'line':(dn?'doughnut':'bar'),data:{labels:s.labels,datasets:ds},options:opt,plugins:[vl]});
+  (slide._ch=slide._ch||[]).push(c)}
+
+/* ---- count up ---- */
+const fmt=(v,d)=>v.toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d});
+function count(el){const to=+el.dataset.to,d=+el.dataset.dec,pre=el.dataset.pre||'';if(RM){el.textContent=pre+fmt(to,d);return}
+  const t0=performance.now(),dur=1800;el.textContent=pre+fmt(0,d);
+  (function f(t){const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,4);el.textContent=pre+fmt(to*e,d);if(p<1)requestAnimationFrame(f)})(t0)}
+
+/* ---- build + navigate ---- */
+const deck=$('#deck');
+deck.innerHTML=D.slides.map((s,i)=>{SI=i;return `<section class="slide" aria-hidden="true" aria-label="${i+1} / ${D.slides.length}">${T[s.t](s)}</section>`}).join('');
+const sl=$$('.slide',deck),N=sl.length;let cur=-1,timer=null;
+const ap=$('#ap');
+function enter(s,i){$$('.big[data-to]',s).forEach(count);$$('canvas',s).forEach(cv=>mkChart(cv,D.slides[i],s))}
+function leave(s){(s._ch||[]).forEach(c=>c.destroy());s._ch=[]}
+function go(i){i=Math.max(0,Math.min(N-1,i));if(i===cur)return;
+  if(cur>=0){sl[cur].classList.remove('on');sl[cur].setAttribute('aria-hidden','true');leave(sl[cur])}
+  cur=i;sl[i].classList.add('on');sl[i].setAttribute('aria-hidden','false');sl[i].scrollTop=0;enter(sl[i],i);
+  $('#pg i').style.width=((i+1)/N*100)+'%';$('#ct').textContent=(i+1)+' / '+N;
+  try{history.replaceState(null,'','#'+(i+1))}catch(e){}
+  if(i===N-1)stop()}
+const next=()=>go(cur+1),prev=()=>go(cur-1);
+function stop(){if(timer){clearInterval(timer);timer=null}ap.setAttribute('aria-pressed','false');ap.textContent='▶ 자동 재생'}
+function play(){stop();ap.setAttribute('aria-pressed','true');ap.textContent='❚❚ 정지';if(cur>=N-1)go(0);timer=setInterval(()=>{if(cur>=N-1)stop();else next()},12000)}
+ap.addEventListener('click',e=>{e.stopPropagation();timer?stop():play()});
+document.addEventListener('keydown',e=>{const k=e.key;
+  if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Enter'){if(e.target===ap)return;e.preventDefault();next()}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev()}
+  else if(k==='Home')go(0);else if(k==='End')go(N-1);
+  else if(k==='a'||k==='A')timer?stop():play()});
+deck.addEventListener('click',e=>{if(e.target.closest('a'))return;(e.clientX<innerWidth*.3)?prev():next()});
+let tx=null;deck.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+deck.addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>50){dx<0?next():prev()}});
+const h=parseInt((location.hash||'').slice(1),10);
+requestAnimationFrame(()=>requestAnimationFrame(()=>{go(h>0&&h<=N?h-1:0);if(!RM&&!h)play()}));
+})();
+</script></body></html>
