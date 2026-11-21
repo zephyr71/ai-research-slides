@@ -1,0 +1,220 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>리뷰는 이기고 발견은 잃는가: 연구와 심사의 공진화</title><meta name="description" content="리뷰는 이기고 발견은 잃는가: 연구와 심사의 공진화 · 인터랙티브 슬라이드"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script><style>/* Minimal keynote theme: black stage, one idea per slide, one accent. Light variant follows the OS. */
+:root{--bg:#000;--fg:#f5f5f7;--fg2:#a1a1a6;--ac:#2997ff;--ac2:#ff9f0a;--tr:#1c1c1e;--ln:#3a3a3c;--e:cubic-bezier(.2,.8,.2,1);color-scheme:dark}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#fff;--fg:#1d1d1f;--fg2:#6e6e73;--ac:#0071e3;--ac2:#c93400;--tr:#f2f2f7;--ln:#d2d2d7;color-scheme:light}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;overflow:hidden;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+#deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;display:flex;overflow-y:auto;overflow-x:hidden;padding:clamp(24px,6vw,96px) clamp(20px,6vw,96px) clamp(64px,10vh,96px);opacity:0;visibility:hidden;transform:scale(.985);transition:opacity .7s var(--e),transform .9s var(--e),visibility 0s linear .7s}
+.slide.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.in{margin:auto;width:min(1080px,100%);display:grid;gap:clamp(16px,3.2vh,32px)}
+.in.c{text-align:center;justify-items:center}
+h1,h2,h3,h4,p{margin:0}
+h1{font-size:clamp(34px,8vw,92px);font-weight:800;line-height:1.1;letter-spacing:-.035em;text-wrap:balance}
+h2{font-size:clamp(30px,6.4vw,76px);font-weight:700;line-height:1.15;letter-spacing:-.03em;text-wrap:balance}
+h3{font-size:clamp(22px,3.6vw,40px);font-weight:700;line-height:1.25;letter-spacing:-.02em;text-wrap:balance}
+.kick{font-size:clamp(13px,1.6vw,16px);font-weight:600;color:var(--ac);letter-spacing:.02em}
+.sub{font-size:clamp(16px,2.3vw,26px);line-height:1.5;color:var(--fg2);max-width:30em;text-wrap:pretty}
+.note{font-size:clamp(13px,1.5vw,15px);line-height:1.6;color:var(--fg2);max-width:46em}
+.pill{display:inline-block;border:1px solid var(--ln);color:var(--fg2);border-radius:999px;padding:6px 16px;font-size:14px}
+.big{font-size:clamp(72px,19vw,230px);font-weight:800;line-height:1;letter-spacing:-.045em;color:var(--ac);font-variant-numeric:tabular-nums}
+.unit{font-size:clamp(22px,4vw,48px);font-weight:600;color:var(--fg2);margin-left:.25em}
+/* reveal */
+.r{opacity:0;transform:translateY(26px);filter:blur(8px);transition:opacity .9s var(--e),transform .9s var(--e),filter .9s var(--e);transition-delay:calc(var(--i,0)*.14s + .2s)}
+.on .r{opacity:1;transform:none;filter:none}
+.w{display:inline-block}
+/* bars (the preferred motion) */
+.bars{display:grid;gap:clamp(14px,2.6vh,26px);width:100%}
+.br{display:grid;grid-template-columns:minmax(120px,240px) 1fr auto;gap:8px 20px;align-items:center}
+.bl{font-size:clamp(15px,2vw,22px);font-weight:500}
+.bar{height:12px;border-radius:6px;background:var(--tr);overflow:hidden}
+.bar>i{display:block;height:100%;width:0;border-radius:6px;background:var(--c,var(--ac));transition:width 1.5s var(--e) calc(var(--i,0)*.16s + .6s)}
+.on .bar>i{width:var(--w)}
+.bv{font-size:clamp(18px,2.6vw,30px);font-weight:700;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.br{grid-template-columns:1fr auto}.br .bl{grid-column:1/-1}}
+.cw{position:relative;width:100%;height:clamp(240px,46vh,420px)}
+.cw.sq{max-width:420px;height:clamp(220px,40vh,360px);margin-inline:auto}
+/* flow */
+.fl{display:flex;flex-wrap:wrap;align-items:stretch;justify-content:center;gap:12px;width:100%}
+.fs{flex:1 1 220px;max-width:340px;display:grid;gap:6px;align-content:start;padding:20px;border-radius:20px;background:var(--tr);text-align:left}
+.fs b{font-size:clamp(18px,2.4vw,26px);line-height:1.3}
+.fs span{font-size:15px;line-height:1.55;color:var(--fg2)}
+.ar{align-self:center;font-size:28px;color:var(--ac)}
+@media (max-width:760px){.ar{transform:rotate(90deg);width:100%;text-align:center}.on .ar{transform:rotate(90deg)}.fs{max-width:none}}
+/* compare */
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;width:100%}
+.cp{padding:clamp(18px,3vw,32px);border-radius:24px;background:var(--tr);display:grid;gap:14px;align-content:start}
+.cp h4{font-size:clamp(18px,2.4vw,26px);font-weight:700}
+.cp.yes h4{color:var(--ac)}.cp.no h4{color:var(--ac2)}
+.cp ul{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.cp li{font-size:clamp(15px,1.9vw,19px);line-height:1.5;padding-left:18px;position:relative}
+.cp li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.5}
+/* checks */
+.cks{display:grid;gap:14px;width:100%}
+.ck{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:18px 22px;border-radius:20px;background:var(--tr)}
+.ck b{font-size:clamp(16px,2.2vw,24px);font-weight:600;line-height:1.4}
+.ck span.s{display:block;font-size:14px;color:var(--fg2);font-weight:400;margin-top:2px}
+.mk{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--bg);background:var(--ac);transform:scale(0);transition:transform .6s var(--e) calc(var(--i,0)*.14s + .6s)}
+.mk.n{background:var(--ac2)}
+.on .mk{transform:scale(1)}
+/* illustrations */
+.cap2{font-size:clamp(13px,1.5vw,15px);color:var(--fg2);text-align:center;max-width:44em;margin-inline:auto;line-height:1.6}
+.pgs{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,64px);justify-content:center;width:100%}
+.pg{flex:1 1 280px;max-width:560px;display:grid;gap:14px}
+.pg svg{width:100%;height:auto;display:block}
+.pg .dg{opacity:0;transition:opacity 1.2s var(--e) .3s}.on .pg .dg{opacity:1}
+.pg .hi circle{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(0)}
+.on .pg .hi circle{animation:pop .5s var(--e) both;animation-delay:calc(var(--d,0)*1ms + .9s)}
+@keyframes pop{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+.pc{display:grid;gap:4px;text-align:center}.pn{font-size:clamp(34px,6vw,64px);font-weight:800;color:var(--ac);letter-spacing:-.03em}.pc span{font-size:14px;color:var(--fg2);line-height:1.5}
+.bz{display:grid;gap:0;width:100%}
+.bz .rt{text-align:center;font-size:clamp(17px,2.4vw,26px);font-weight:700}
+.bz svg{width:100%;height:auto;display:block}
+.bz path{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s var(--e) calc(var(--i,0)*.3s + .7s)}
+.on .bz path{stroke-dashoffset:0}
+.bz .lv{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center}
+.bz .lv b{display:block;font-size:clamp(16px,2.2vw,24px)}.bz .lv span{font-size:clamp(13px,1.7vw,17px);color:var(--fg2)}
+.sc2 svg{width:100%;height:auto;display:block;max-width:560px;margin-inline:auto}
+.beam{transform-box:view-box;transform-origin:100px 30px;transition:transform 2s var(--e) 1s}
+.on .beam{transform:rotate(var(--tilt,-8deg))}
+.sc2 .lv{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center}.sc2 .lv b{display:block;font-size:clamp(16px,2.2vw,24px)}.sc2 .lv span{font-size:clamp(13px,1.7vw,17px);color:var(--fg2)}
+.tl{display:grid;gap:18px;width:100%}
+.tln{height:4px;border-radius:2px;background:var(--tr);overflow:hidden}.tln i{display:block;height:100%;width:0;background:var(--ac);transition:width 2.6s var(--e) .6s}.on .tln i{width:100%}
+.tl ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:12px;text-align:center}
+.tl li{display:grid;gap:6px;justify-items:center}.tl li b{font-size:clamp(14px,1.8vw,18px)}.tl li .dt{width:14px;height:14px;border-radius:50%;background:var(--ac)}
+.eyes{display:flex;flex-wrap:wrap;gap:clamp(16px,4vw,48px);justify-content:center;width:100%}
+.ey{flex:1 1 240px;max-width:340px;display:grid;gap:10px;text-align:center}.ey svg{width:100%;height:auto;display:block}.ey b{font-size:clamp(15px,2vw,20px)}
+.ey .sp{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.4s var(--e) 1s}.on .ey .sp{stroke-dashoffset:0}
+.ey .fx{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(0)}.on .ey .fx{animation:pop .5s var(--e) both;animation-delay:calc(var(--d,0)*1ms + 1s)}
+.sh{display:flex;gap:clamp(24px,8vw,96px);justify-content:center;align-items:flex-end;width:100%}
+.shc{flex:1 1 0;max-width:260px;display:grid;gap:12px;text-align:center}
+.sht{position:relative;height:clamp(160px,30vh,260px);border-bottom:1px solid var(--ln)}
+.gh{position:absolute;bottom:0;left:18%;right:18%;border:1.5px dashed var(--ln);border-bottom:0;border-radius:12px 12px 0 0}
+.nw{position:absolute;bottom:0;left:18%;right:18%;height:var(--f);background:var(--c);border-radius:12px 12px 0 0;transition:height 1.8s var(--e) 1s}.on .nw{height:var(--t)}
+.shc b{font-size:clamp(15px,2vw,20px)}
+.st{display:flex;align-items:flex-end;gap:10px;height:clamp(200px,36vh,320px);width:100%}
+.stp{flex:1;height:var(--h);border-radius:14px 14px 0 0;background:var(--tr);border-top:3px solid var(--ac);display:flex;align-items:flex-end;padding:14px;font-size:clamp(15px,2vw,22px);font-weight:600}
+.lp svg{width:100%;height:auto;display:block}
+.lp .nd{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.6)}.on .lp .nd{animation:pop .6s var(--e) both;animation-delay:calc(var(--d,0)*1ms + .6s)}
+.lp .rg{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 3s var(--e) .4s}.on .lp .rg{stroke-dashoffset:0}
+.sc{justify-items:start}.sc .ref{font-size:clamp(14px,1.8vw,18px);line-height:1.6;color:var(--fg)}
+.sc a{color:var(--ac);text-decoration:none;font-weight:600}
+/* chrome */
+#ui{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,4vw,40px) calc(14px + env(safe-area-inset-bottom));pointer-events:none}
+#ui>*{pointer-events:auto}
+#ap{font:inherit;font-size:13px;color:var(--fg2);background:transparent;border:1px solid var(--ln);border-radius:999px;padding:7px 14px;cursor:pointer;min-height:36px}
+#ap[aria-pressed="true"]{color:var(--bg);background:var(--fg);border-color:var(--fg)}
+#ap:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+#pg{flex:1;height:3px;border-radius:2px;background:var(--tr);overflow:hidden}#pg i{display:block;height:100%;width:0;background:var(--fg);transition:width .6s var(--e)}
+#ct{font-size:13px;color:var(--fg2);font-variant-numeric:tabular-nums;min-width:3.5em;text-align:right}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.r{opacity:1;transform:none;filter:none}.bar>i{width:var(--w)}.nw{height:var(--t)}.mk{transform:none}.beam{transform:rotate(var(--tilt,-8deg))}.pg .dg,.pg .hi circle,.lp .nd,.ey .fx{opacity:1;transform:none}.bz path,.ey .sp,.lp .rg{stroke-dashoffset:0}.tln i{width:100%}}
+
+.fl.na .fs{flex:1 1 240px;max-width:none}.fs b{display:block}
+.fl.na .fs{padding:clamp(18px,2.4vw,28px)}.fl.na .fs b{font-size:clamp(18px,2.4vw,26px)}.fl.na .fs span{font-size:clamp(15px,1.9vw,20px);line-height:1.55}
+.bz svg{max-height:30vh}.sc2 svg{max-height:34vh}.lp svg{max-height:46vh}
+</style></head><body><main id="deck" aria-live="off"></main><div id="ui"><button id="ap" type="button" aria-pressed="false">▶ 자동 재생</button><div id="pg" aria-hidden="true"><i></i></div><span id="ct"></span></div><script>window.DECK={"slides": [{"t": "title", "k": "Liu, Wang, Zhang & Liu (2026) · arXiv 2611.10791", "h": "출판은 건재한데 가치는 하락한다", "sub": "AI 연구 생산과 동료심사가 서로를 강화하는 진화게임", "badge": "arXiv 프리프린트 · 순수 이론 모형 · 동료심사 전"}, {"t": "say", "h": "한눈에 보는 네 가지", "sub": "저자(수락 지향 대 탐구)와 리뷰어(대리 평가 대 정밀 평가)의 상호강화가 두 안정 균형을 만듦 · 출판 수가 같아도 수락 연구의 가치가 낮아질 수 있음(예시 수치 40%) · 감사 배정과 리뷰 보상의 충분 조건 도출 · 예측이 아니라 경고 메커니즘"}, {"t": "say", "h": "서론: 싸게 쓰는 논문, 비싸지는 검증.", "sub": "AI가 논문을 싸게 생산할수록 그 논문이 실제로 지식에 기여하는지 검증하는 능력은 더 비싸집니다. 이 이론 논문은 연구 생산과 동료심사가 서로의 약점을 강화하는 순환을 분석합니다."}, {"t": "pts", "k": "이론적 논의 1", "h": "인센티브 이론", "steps": [{"t": "다중과제", "d": "측정 가능한 성과에 대한 보상이 덜 측정 가능한 기여로부터 노력을 빼앗음(Holmstrom과 Milgrom, 1991)"}, {"t": "선택", "d": "출판 기반 선택은 악의 없이 약한 연구 관행을 전파(Smaldino와 McElreath, 2016)"}, {"t": "탐구적 연구", "d": "고신규성 제안이 더 낮은 점수를 받음(Boudreau et al., 2016)"}]}, {"t": "pts", "k": "이론적 논의 2", "h": "실증 증거", "steps": [{"t": "AI Scientist 평가", "d": "12개 제안 실험 중 5개가 코딩 오류로 실패, 완성 7편 중 4편에 부정확·환각 수치(Beel et al., 2025)"}, {"t": "감사", "d": "최종 원고에 드러나지 않는 벤치마크 선택, 데이터 누출 등의 문제(Luo et al., 2026)"}, {"t": "평가 쪽", "d": "날조 논문에 수락 수준 점수를 주는 적대적 검증, 수사적 재작성만으로 바뀌는 점수"}, {"t": "수요", "d": "ICLR 2026 회고: 19,525편 제출, 76,139건 리뷰"}]}, {"t": "pts", "k": "개념 정의", "h": "이 연구의 핵심 개념", "steps": [{"t": "수락 지향 연구", "d": "평가자가 좋아할 완결된 형태를 겨냥한 연구"}, {"t": "탐구적 연구", "d": "인정의 불확실성을 감수하는 기여 추구"}, {"t": "대리 평가", "d": "저렴한 겉치레 신호에 의존한 평가"}, {"t": "분기선(separatrix)", "d": "두 안정 균형의 끌림 영역을 가르는 경계"}], "note": "이 연구에서 쓰이는 의미로 정리한 개념 정의입니다."}, {"t": "pts", "k": "연구문제", "h": "다루는 질문", "steps": [{"t": "RQ1", "d": "생산과 평가의 상호강화는 어떤 균형을 만드는가"}, {"t": "RQ2", "d": "출판 수가 같아도 과학적 가치가 낮아질 수 있는가"}, {"t": "RQ3", "d": "어떤 개입이 순환을 되돌리는가"}]}, {"t": "num", "k": "방법론 1 · 모형", "n": "2", "unit": "개 모집단", "label": "저자 집단의 수락 지향 비율 x, 리뷰어 집단의 대리 평가 비율 y (복제자 동학)", "note": "저자의 상대 보상은 α+βy, 리뷰어의 상대 보상은 γ+κx입니다. β와 κ가 모두 양수일 때 두 피드백이 닫힙니다. 모형은 이진 전략과 예시 매개변수를 쓰는 이론 모형입니다."}, {"t": "pts", "k": "방법론 2 · 분석 세 층위", "h": "정리, 개입, 수치", "steps": [{"t": "정리 3.1", "d": "(0,0)과 (1,1)이 국소 점근 안정, 내부 균형은 안장점, 보존량으로 분기선을 해석적으로 특성화"}, {"t": "개입 분석", "d": "감사 비율 a>a_c=1+α/β 또는 보상 s>s_c=γ+κ"}, {"t": "수치", "d": "선언된 예시 매개변수에서 동역학·개입 시기·사양 변형 점검"}]}, {"t": "pts", "k": "방법론 3 · 과학적 가치", "h": "사적 보상과 분리", "steps": [{"t": "정의", "d": "W는 각 전략의 수락된 산출에 독립 평가된 기대 가치 v를 곱해 정의"}, {"t": "조건", "d": "대리 균형이 과학적으로 열등할 조건은 p^M_A·v_A < p^C_T·v_T"}, {"t": "주의", "d": "v는 외생적으로 선언된 값이며 측정된 값이 아님"}]}, {"t": "chart", "k": "결과 1 · 가치의 은폐", "h": "기회당 수락 연구의 기대 가치 (예시 매개변수)", "kind": "bar", "labels": ["정밀 체제", "대리 체제 (v_A=0.6)", "대리 체제 (v_A=1.2)"], "datasets": [{"label": "기대 가치", "data": [0.65, 0.39, 0.78], "show": ["0.65", "0.39 (40% 하락)", "0.78"], "c": ["ac", "ac2", "tr"]}], "min": 0, "max": 0.9, "note": "출판 빈도는 같아도 가치가 달라집니다. 손해의 크기는 행동이 아니라 기여의 품질이 결정하며, 탐지에는 독립적 기여 평가가 필요합니다. 40% 같은 수치는 메커니즘의 존재 증명이지 규모 추정이 아닙니다."}, {"t": "chart", "k": "결과 2 · 조정 속도의 효과", "h": "정밀 체제에 도달한 시작점 수 (1,681개 중)", "kind": "bar", "labels": ["ρ=0.25", "ρ=1", "ρ=4"], "datasets": [{"label": "정밀 체제 도달", "data": [462, 532, 642], "show": ["462", "532", "642"], "c": ["ac2", "ac", "ac"]}], "min": 0, "max": 700, "note": "예시에서 저자는 대리 평가가 4분의 1(y*=0.25)을 넘으면, 리뷰어는 수락 지향 저자가 절반(x*=0.5)을 넘으면 기웁니다. 싼 생산이 먼저 움직여 대부분의 평가가 아직 정밀할 때 순환이 시작될 수 있습니다."}, {"t": "chk", "k": "결과 3 · 개입", "h": "부분 개혁의 한계", "rows": [{"t": "상설 개입의 충분 조건: 감사 비율 a>0.75 또는 보상 s>0.2(예시 단위)", "s": null, "m": "y"}, {"t": "(0.8, 0.8) 근처에서 보상 s=0.3일 때 첫 성공 지속 기간은 43 모델 시간이고 더 일찍 철회하면 원래 체제로 복귀", "s": null, "m": "y"}, {"t": "분기선을 넘긴 뒤에는 지원 없이도 회복이 지속", "s": null, "m": "y"}, {"t": "임계 근처에서는 변화 유인이 작아 회복이 느림", "s": null, "m": "n"}]}, {"t": "chk", "k": "결과 4 · 견고성", "h": "경고의 범위", "rows": [{"t": "수락 지향 생산율을 두 배(n_A=2)로 하면 시험된 사양에서 정밀 균형의 안정성이 사라짐", "s": null, "m": "n"}, {"t": "수용 상한(K=0.3)에서는 낮은 시작점에서 정밀 평가가 유지되나 가치 0.2775, 높은 시작점은 대리 체제 유지(0.18)", "s": null, "m": "y"}, {"t": "비선형 작업부하와 소량의 전략 전환에서도 두 체제 유지", "s": null, "m": "y"}, {"t": "상호강화 연결을 제거하면 두 시작점 모두 정밀로 수렴", "s": null, "m": "y"}]}, {"t": "pts", "k": "해설 · 논문에는 없는 내용", "h": "논문에는 없는 내용 1 · 미시 편향과 시스템 수준", "steps": [{"t": "해설자의 해석", "d": "LLM 심사 편향 실증이 개별 판정의 미시적 왜곡이라면, 이 모형은 생산과 평가가 닫힌 루프일 때의 시스템 수준 귀결로 서로 보완적입니다."}, {"t": "차이", "d": "미시 편향이 없어도 순환이 성립할 수 있음을 모형이 보입니다."}, {"t": "경계", "d": "이 연결은 해설자의 비교입니다."}], "note": "이 장은 논문의 주장이 아니라 해설자의 해석입니다. 원문과 구분해서 읽어 주세요."}, {"t": "pts", "k": "해설 · 논문에는 없는 내용", "h": "논문에는 없는 내용 2 · 리뷰 개선만으로 충분한가", "steps": [{"t": "해설자의 해석", "d": "생산율 배가 결과는 생산 비용이 계속 떨어지는 세계에서 리뷰 개선만으로 정밀 체제를 지키기 어렵다는 학문 생태계 정책의 함의를 담습니다."}, {"t": "단서", "d": "제안된 세 아키텍처의 실효성과 게이밍·불평등한 부담은 파일럿 없이 알 수 없습니다."}, {"t": "수업 팁", "d": "출판 수와 가치를 구분하는 지표가 있는지 토론하게 하세요."}], "note": "이 장은 논문의 주장이 아니라 해설자의 해석입니다. 원문과 구분해서 읽어 주세요."}, {"t": "chk", "k": "결론 · 의의", "h": "저자들의 해석과 제안", "rows": [{"t": "연구-리뷰 순환은 참여자를 보상하면서 과학적 기여를 갉아먹을 수 있다", "s": null, "m": "y"}, {"t": "개별 리뷰 질 개선만으로는 부족하며 독립 검증된 기여와 결과적 점검에 보상해야 한다", "s": null, "m": "y"}, {"t": "제안(파일럿 대상): 감사 가능한 AI 위원회와 인간 배심, 클레임 수준 리뷰와 복제 시장, 사전 출판 계약과 탐구 할당", "s": null, "m": "y"}]}, {"t": "cmp", "h": "이 연구가 말하는 것, 말하지 않는 것", "l": {"h": "보여주는 것", "items": ["인센티브 연결이 유지되면 순환이 자기유지적", "출판 수와 과학적 가치의 분리 가능성", "개입이 분기선을 넘길 때만 지속 효과"]}, "r": {"h": "보여주지 않는 것", "items": ["특정 학회에 대한 예측", "과학적 가치의 실제 크기(v는 선언값)", "제안 아키텍처의 실효성", "자동화가 반드시 하나의 결과를 낳는다는 주장", "동료심사를 거친 확정 결론"]}}, {"t": "pts", "k": "한계 상세", "h": "읽을 때의 주의", "steps": [{"t": "전략", "d": "이진 전략"}, {"t": "매개변수", "d": "예시 값이며 모델 시간은 달력 시간이 아님"}, {"t": "구조", "d": "고정 수용 용량이나 다중 리뷰어 의결 규칙은 아핀 구조를 깨뜨림"}, {"t": "조건", "d": "β나 κ가 0이면 순환이 끊기고 부호가 반대면 중심이 생김"}]}, {"t": "pts", "k": "후속 연구", "h": "남은 질문", "steps": [{"t": "측정", "d": "β와 κ라는 두 실증 연결의 측정(부록 설계)"}, {"t": "파일럿", "d": "세 아키텍처의 단계적 파일럿"}, {"t": "게이밍", "d": "제안의 게이밍과 부담의 불평등"}]}, {"t": "pts", "k": "생각해 볼 질문 · 해설", "h": "토론해 봅시다", "steps": [{"t": "제도", "d": "논문 수가 늘 때 심사의 질을 어떻게 지킬 수 있을까"}, {"t": "지표", "d": "출판 수 말고 무엇으로 연구의 가치를 볼 수 있을까"}, {"t": "보상", "d": "정밀 심사에 보상하면 어떤 일이 생길까"}], "note": "정답이 없는 질문입니다. 논문의 결론을 넘어서는 생각을 해 보세요."}, {"t": "src", "ref": "Liu, H., Wang, M., Zhang, Z., & Liu, Y. (2026). Winning reviews, losing discovery? The co-evolutionary game of AI research and peer review [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2611.10791", "status": "arXiv 프리프린트(2026년 11월)로 동료심사를 거치지 않았습니다.", "post": "https://donghunc.kr/?p=1133"}]}</script><script>(()=>{
+'use strict';
+const D=window.DECK,$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const R=(h,i=0,tag='div',cls='')=>`<${tag} class="r ${cls}" style="--i:${i}">${h}</${tag}>`;
+const words=(t,b=0)=>String(t).split(' ').map((w,k)=>`<span class="r w" style="--i:${(b+k*.45).toFixed(2)}">${esc(w)}</span>`).join(' ');
+const kick=(s,i=0)=>s.k?R(esc(s.k),i,'p','kick'):'';
+const cap=(s,i)=>s.cap?R(esc(s.cap),i,'p','cap2'):'';
+let SI=0;
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+/* ---- illustrations ---- */
+function pict(s){return `<div class="pgs">${s.groups.map((g,gi)=>{
+  const cols=g.cols,rows=Math.ceil(g.total/cols),c=10,r=3.6,id=`gr${SI}_${gi}`,step=Math.min(45,1200/Math.max(1,g.on));
+  let dots='',hi='',defs='';
+  for(let n=0;n<g.total;n++){const x=(n%cols)*c+c/2,y=Math.floor(n/cols)*c+c/2,d=Math.round(n*step);
+    if(n+1<=Math.floor(g.on))hi+=`<circle cx="${x}" cy="${y}" r="${r+.5}" fill="var(--ac)" style="--d:${d}"/>`;
+    else if(n<g.on){const f=(g.on-n).toFixed(3);defs=`<linearGradient id="${id}"><stop offset="${f}" stop-color="var(--ac)"/><stop offset="${f}" stop-color="var(--ln)"/></linearGradient>`;hi+=`<circle cx="${x}" cy="${y}" r="${r+.5}" fill="url(#${id})" style="--d:${d}"/>`}
+    else dots+=`<circle cx="${x}" cy="${y}" r="${r}"/>`}
+  return `<div class="pg r" style="--i:${gi+1}"><svg viewBox="0 0 ${cols*c} ${rows*c}" role="img" aria-label="${esc(g.label)}"><defs>${defs}</defs><g class="dg" fill="var(--ln)">${dots}</g><g class="hi">${hi}</g></svg><div class="pc"><b class="pn">${esc(g.label)}</b><span>${esc(g.cap||'')}</span></div></div>`}).join('')}</div>`}
+function branch(s){return `<div class="bz">${R(esc(s.root),0,'div','rt')}<svg viewBox="0 0 200 100" aria-hidden="true">${s.br.map((b,i)=>{const n=s.br.length,x=n===1?100:30+140*i/(n-1);return `<path d="M100 4 C 100 54, ${x} 46, ${x} 96" stroke="${b.c||'var(--ac)'}" stroke-width="${b.w}" pathLength="1" style="--i:${i}"/>`}).join('')}</svg><div class="lv" style="grid-template-columns:repeat(${s.br.length},1fr)">${s.br.map((b,i)=>R(`<b>${esc(b.l)}</b><span>${esc(b.sub||'')}</span>`,i+3)).join('')}</div></div>`}
+function scale(s){const[l,rr]=s.sides;return `<div class="sc2"><svg viewBox="0 0 200 110" aria-hidden="true"><path d="M100 30 L88 100 L112 100 Z" fill="var(--ln)"/><g class="beam" style="--tilt:${s.tilt||-8}deg"><line x1="20" y1="30" x2="180" y2="30" stroke="var(--fg)" stroke-width="3" stroke-linecap="round"/><path d="M20 30 L8 62 M20 30 L32 62 M180 30 L168 62 M180 30 L192 62" stroke="var(--fg2)" stroke-width="1.2" fill="none"/><path d="M4 62 Q20 76 36 62 Z" fill="var(--ac)"/><path d="M164 62 Q180 76 196 62 Z" fill="var(--ac2)"/></g></svg><div class="lv">${R(`<b>${esc(l.l)}</b><span>${esc(l.sub)}</span>`,1)}${R(`<b>${esc(rr.l)}</b><span>${esc(rr.sub)}</span>`,2)}</div></div>`}
+function timeline(s){return `<div class="tl"><div class="tln r" style="--i:0"><i></i></div><ol>${s.pts.map((p,i)=>`<li class="r" style="--i:${i+1}"><span class="dt"></span><b>${esc(p.l)}</b></li>`).join('')}</ol></div>`}
+function eye(s){const mk=(spread,n,seed,rad,label,gi)=>{const f=rng(seed);let pts=[],pl='',dots='';
+  for(let k=0;k<n;k++){const a=f()*6.283,d=Math.sqrt(f())*spread,x=Math.max(20,Math.min(180,100+Math.cos(a)*d)),y=Math.max(24,Math.min(176,92+Math.sin(a)*d*1.1));pts.push([x,y])}
+  pl=pts.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ');
+  dots=pts.map((p,k)=>`<circle class="fx" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${rad}" fill="var(--ac)" fill-opacity=".85" style="--d:${k*150}"/>`).join('');
+  return `<div class="ey r" style="--i:${gi+1}"><svg viewBox="0 0 200 200" role="img" aria-label="${esc(label)}"><rect x="2" y="2" width="196" height="196" rx="18" fill="var(--tr)" stroke="var(--ln)"/><circle cx="100" cy="82" r="34" fill="none" stroke="var(--ln)" stroke-width="2"/><path d="M40 190 Q100 118 160 190" fill="none" stroke="var(--ln)" stroke-width="2"/><polyline class="sp" points="${pl}" pathLength="1" fill="none" stroke="var(--ac)" stroke-width="1.6" stroke-opacity=".7"/>${dots}</svg><b>${esc(label)}</b></div>`};
+  return `<div class="eyes">${mk(26,7,3,4,s.a,0)}${mk(78,12,9,7,s.b,1)}</div>`}
+function shift(s){return `<div class="sh">${s.items.map((it,i)=>`<div class="shc r" style="--i:${i+1}"><div class="sht"><div class="gh" style="height:${it.f}%"></div><div class="nw" style="--f:${it.f}%;--t:${it.t}%;--c:${it.c==='ac2'?'var(--ac2)':'var(--ac)'}"></div></div><b>${esc(it.l)}</b></div>`).join('')}</div>`}
+function stairs(s){const n=s.steps.length;return `<div class="st">${s.steps.map((p,i)=>`<div class="stp r" style="--i:${i+1};--h:${36+i*(60/Math.max(1,n-1))}%">${esc(p.l)}</div>`).join('')}</div>`}
+function loop(s){const n=s.nodes.length,cx=320,cy=180,rx=215,ry=130;
+  const path=`M${cx-rx} ${cy} a${rx} ${ry} 0 1 1 ${2*rx} 0 a${rx} ${ry} 0 1 1 ${-2*rx} 0`;
+  const nodes=s.nodes.map((t,k)=>{const a=(-90+k*360/n)*Math.PI/180,x=cx+rx*Math.cos(a),y=cy+ry*Math.sin(a);
+    const sp=[...t].map((c,j)=>c===' '?j:-1).filter(j=>j>=0).sort((a,b)=>Math.abs(a-t.length/2)-Math.abs(b-t.length/2))[0],parts=t.length>7&&sp!==undefined?[t.slice(0,sp),t.slice(sp+1)]:[t];
+    const tx=parts.map((p,j)=>`<tspan x="${x.toFixed(1)}" dy="${j?22:(parts.length>1?-2:7)}">${esc(p)}</tspan>`).join('');
+    return `<g class="nd" style="--d:${k*350}"><rect x="${(x-85).toFixed(1)}" y="${(y-30).toFixed(1)}" width="170" height="60" rx="16" fill="var(--tr)" stroke="${k===s.hl?'var(--ac)':'var(--ln)'}" stroke-width="${k===s.hl?2:1}"/><text x="${x.toFixed(1)}" y="${(y-(parts.length>1?8:0)).toFixed(1)}" fill="var(--fg)" font-size="19" font-weight="600" text-anchor="middle">${tx}</text></g>`}).join('');
+  return `<div class="lp"><svg viewBox="0 0 640 360" role="img" aria-label="${esc(s.nodes.join(' → '))}"><path class="rg" d="${path}" pathLength="1" fill="none" stroke="var(--ln)" stroke-width="2"/>${nodes}<circle r="6" fill="var(--ac)"><animateMotion dur="9s" repeatCount="indefinite" path="${path}"/></circle></svg></div>`}
+const ILL={pict,branch,scale,timeline,eye,shift,stairs,loop};
+
+/* ---- slide types ---- */
+const T={
+ title:s=>`<div class="in c">${kick(s,0)}<h1>${words(s.h,1)}</h1>${s.sub?R(esc(s.sub),6,'p','sub'):''}${s.badge?R(`<span class="pill">${esc(s.badge)}</span>`,7):''}</div>`,
+ say:s=>`<div class="in c"><h2>${words(s.h)}</h2>${s.sub?R(esc(s.sub),5,'p','sub'):''}</div>`,
+ num:s=>`<div class="in c">${kick(s,0)}${R(`<span class="big" data-to="${s.n}" data-dec="${s.dec||0}" data-pre="${esc(s.pre||'')}">${esc(s.pre||'')}${s.n}</span><span class="unit">${esc(s.unit||'')}</span>`,1)}${R(esc(s.label),2,'p','sub')}${s.note?R(esc(s.note),3,'p','note'):''}</div>`,
+ bars:s=>`<div class="in">${kick(s,0)}${s.h?R(esc(s.h),0,'h3'):''}<div class="bars">${s.rows.map((r,i)=>`<div class="br r" style="--i:${i+1}"><span class="bl">${esc(r.l)}</span><div class="bar"><i style="--w:${(r.v/s.max*100).toFixed(2)}%;--c:${r.c||'var(--ac)'};--i:${i}"></i></div><b class="bv">${esc(r.show)}</b></div>`).join('')}</div>${s.note?R(esc(s.note),5,'p','note'):''}</div>`,
+ chart:s=>`<div class="in">${kick(s,0)}${R(esc(s.h),0,'h3')}<div class="cw r ${s.kind==='doughnut'?'sq':''}" style="--i:1"><canvas role="img" aria-label="${esc(s.h)}"></canvas></div>${s.note?R(esc(s.note),3,'p','note'):''}</div>`,
+ pts:s=>T.flow(Object.assign({na:1},s)),
+ flow:s=>`<div class="in c">${kick(s,0)}${R(esc(s.h),0,'h3')}<div class="fl${s.na?" na":""}">${s.steps.map((p,i)=>`${i&&!s.na?`<span class="ar r" style="--i:${i+1}">→</span>`:''}<div class="fs r" style="--i:${i+1}"><b>${esc(p.t)}</b><span>${esc(p.d||'')}</span></div>`).join('')}</div>${s.note?R(esc(s.note),5,'p','note'):''}</div>`,
+ cmp:s=>`<div class="in">${R(esc(s.h),0,'h3')}<div class="cmp">${[s.l,s.r].map((p,pi)=>`<div class="cp ${pi?'no':'yes'} r" style="--i:${pi+1}"><h4>${esc(p.h)}</h4><ul>${p.items.map((t,k)=>`<li class="r" style="--i:${pi*3+k+2}">${esc(t)}</li>`).join('')}</ul></div>`).join('')}</div></div>`,
+ chk:s=>`<div class="in">${kick(s,0)}${R(esc(s.h),0,'h3')}<div class="cks">${s.rows.map((r,i)=>`<div class="ck r" style="--i:${i+1}"><span class="mk ${r.m==='n'?'n':''}" style="--i:${i+1}">${r.m==='n'?'✕':'✓'}</span><div><b>${esc(r.t)}</b>${r.s?`<span class="s">${esc(r.s)}</span>`:''}</div></div>`).join('')}</div>${s.note?R(esc(s.note),6,'p','note'):''}</div>`,
+ ill:s=>`<div class="in">${kick(s,0)}${R(esc(s.h),0,'h3')}${ILL[s.kind](s)}${cap(s,6)}</div>`,
+ src:s=>`<div class="in sc">${R('출처',0,'h3')}${R(esc(s.ref),1,'p','ref')}${R(esc(s.status),2,'p','note')}${s.post?R(`<a href="${esc(s.post)}" target="_blank" rel="noopener">블로그 원본 글 보기 →</a>`,3,'p'):''}${R('인포그래픽 제작: donghunc.kr | AI 활용 블로그',4,'p','note')}</div>`
+};
+
+/* ---- charts (Chart.js) ---- */
+const vl={id:'vl',afterDatasetsDraw(ch){const o=ch.options.plugins&&ch.options.plugins.vl;if(!o)return;const x=ch.ctx;x.save();x.fillStyle=o.color;x.font='700 '+o.size+'px '+o.font;x.textBaseline='middle';
+  ch.data.datasets.forEach((d,di)=>{const m=ch.getDatasetMeta(di);m.data.forEach((b,i)=>{const t=d.show&&d.show[i];if(!t)return;
+    if(ch.options.indexAxis==='y'){x.textAlign='left';x.fillText(t,b.x+10,b.y)}else{x.textAlign='center';x.fillText(t,b.x,d.data[i]<0?b.y+16:b.y-14)}})});x.restore()}};
+function mkChart(cv,s,slide){if(typeof Chart==='undefined')return;
+  const cs=getComputedStyle(document.documentElement),col=k=>(cs.getPropertyValue('--'+k).trim()||k),font='Pretendard Variable, Pretendard, sans-serif';
+  const dn=s.kind==='doughnut';
+  const ds=s.datasets.map(d=>({label:d.label,data:d.data,show:d.show,backgroundColor:Array.isArray(d.c)?d.c.map(col):col(d.c||'ac'),borderWidth:0,borderRadius:dn?0:8,borderSkipped:false,barPercentage:.6,categoryPercentage:.8}));
+  const hz=s.axis==='y',val=hz?'x':'y',cat=hz?'y':'x';
+  const opt={responsive:true,maintainAspectRatio:false,animation:{duration:RM?0:1800,easing:'easeOutQuart'},indexAxis:s.axis||'x',layout:{padding:{top:24,right:hz?70:8}},
+    plugins:{legend:{display:!!s.legend,position:'bottom',labels:{color:col('fg2'),font:{family:font,size:14},usePointStyle:true,padding:18}},tooltip:{enabled:true,backgroundColor:col('tr'),titleColor:col('fg'),bodyColor:col('fg2'),borderColor:col('ln'),borderWidth:1,titleFont:{family:font},bodyFont:{family:font}},vl:{color:col('fg'),size:17,font}}};
+  if(dn){opt.cutout='76%';opt.layout={padding:8};opt.plugins.vl=undefined}
+  else{opt.scales={[cat]:{grid:{display:false},border:{display:false},ticks:{color:col('fg2'),font:{family:font,size:14}}},[val]:{display:false,min:s.min||0,max:s.max}}}
+  const c=new Chart(cv,{type:s.kind==='line'?'line':(dn?'doughnut':'bar'),data:{labels:s.labels,datasets:ds},options:opt,plugins:[vl]});
+  (slide._ch=slide._ch||[]).push(c)}
+
+/* ---- count up ---- */
+const fmt=(v,d)=>v.toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d});
+function count(el){const to=+el.dataset.to,d=+el.dataset.dec,pre=el.dataset.pre||'';if(RM){el.textContent=pre+fmt(to,d);return}
+  const t0=performance.now(),dur=1800;el.textContent=pre+fmt(0,d);
+  (function f(t){const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,4);el.textContent=pre+fmt(to*e,d);if(p<1)requestAnimationFrame(f)})(t0)}
+
+/* ---- build + navigate ---- */
+const deck=$('#deck');
+deck.innerHTML=D.slides.map((s,i)=>{SI=i;return `<section class="slide" aria-hidden="true" aria-label="${i+1} / ${D.slides.length}">${T[s.t](s)}</section>`}).join('');
+const sl=$$('.slide',deck),N=sl.length;let cur=-1,timer=null;
+const ap=$('#ap');
+function enter(s,i){$$('.big[data-to]',s).forEach(count);$$('canvas',s).forEach(cv=>mkChart(cv,D.slides[i],s))}
+function leave(s){(s._ch||[]).forEach(c=>c.destroy());s._ch=[]}
+function go(i){i=Math.max(0,Math.min(N-1,i));if(i===cur)return;
+  if(cur>=0){sl[cur].classList.remove('on');sl[cur].setAttribute('aria-hidden','true');leave(sl[cur])}
+  cur=i;sl[i].classList.add('on');sl[i].setAttribute('aria-hidden','false');sl[i].scrollTop=0;enter(sl[i],i);
+  $('#pg i').style.width=((i+1)/N*100)+'%';$('#ct').textContent=(i+1)+' / '+N;
+  try{history.replaceState(null,'','#'+(i+1))}catch(e){}
+  if(i===N-1)stop()}
+const next=()=>go(cur+1),prev=()=>go(cur-1);
+function stop(){if(timer){clearInterval(timer);timer=null}ap.setAttribute('aria-pressed','false');ap.textContent='▶ 자동 재생'}
+function play(){stop();ap.setAttribute('aria-pressed','true');ap.textContent='❚❚ 정지';if(cur>=N-1)go(0);timer=setInterval(()=>{if(cur>=N-1)stop();else next()},12000)}
+ap.addEventListener('click',e=>{e.stopPropagation();timer?stop():play()});
+document.addEventListener('keydown',e=>{const k=e.key;
+  if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Enter'){if(e.target===ap)return;e.preventDefault();next()}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev()}
+  else if(k==='Home')go(0);else if(k==='End')go(N-1);
+  else if(k==='a'||k==='A')timer?stop():play()});
+deck.addEventListener('click',e=>{if(e.target.closest('a'))return;(e.clientX<innerWidth*.3)?prev():next()});
+let tx=null;deck.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+deck.addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>50){dx<0?next():prev()}});
+const h=parseInt((location.hash||'').slice(1),10);
+requestAnimationFrame(()=>requestAnimationFrame(()=>{go(h>0&&h<=N?h-1:0);if(!RM&&!h)play()}));
+})();
+</script></body></html>
