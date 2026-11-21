@@ -1,0 +1,220 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>손글씨 수학에 대한 LLM 피드백</title><meta name="description" content="손글씨 수학에 대한 LLM 피드백 · 인터랙티브 슬라이드"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script><style>/* Minimal keynote theme: black stage, one idea per slide, one accent. Light variant follows the OS. */
+:root{--bg:#000;--fg:#f5f5f7;--fg2:#a1a1a6;--ac:#2997ff;--ac2:#ff9f0a;--tr:#1c1c1e;--ln:#3a3a3c;--e:cubic-bezier(.2,.8,.2,1);color-scheme:dark}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#fff;--fg:#1d1d1f;--fg2:#6e6e73;--ac:#0071e3;--ac2:#c93400;--tr:#f2f2f7;--ln:#d2d2d7;color-scheme:light}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;overflow:hidden;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+#deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;display:flex;overflow-y:auto;overflow-x:hidden;padding:clamp(24px,6vw,96px) clamp(20px,6vw,96px) clamp(64px,10vh,96px);opacity:0;visibility:hidden;transform:scale(.985);transition:opacity .7s var(--e),transform .9s var(--e),visibility 0s linear .7s}
+.slide.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.in{margin:auto;width:min(1080px,100%);display:grid;gap:clamp(16px,3.2vh,32px)}
+.in.c{text-align:center;justify-items:center}
+h1,h2,h3,h4,p{margin:0}
+h1{font-size:clamp(34px,8vw,92px);font-weight:800;line-height:1.1;letter-spacing:-.035em;text-wrap:balance}
+h2{font-size:clamp(30px,6.4vw,76px);font-weight:700;line-height:1.15;letter-spacing:-.03em;text-wrap:balance}
+h3{font-size:clamp(22px,3.6vw,40px);font-weight:700;line-height:1.25;letter-spacing:-.02em;text-wrap:balance}
+.kick{font-size:clamp(13px,1.6vw,16px);font-weight:600;color:var(--ac);letter-spacing:.02em}
+.sub{font-size:clamp(16px,2.3vw,26px);line-height:1.5;color:var(--fg2);max-width:30em;text-wrap:pretty}
+.note{font-size:clamp(13px,1.5vw,15px);line-height:1.6;color:var(--fg2);max-width:46em}
+.pill{display:inline-block;border:1px solid var(--ln);color:var(--fg2);border-radius:999px;padding:6px 16px;font-size:14px}
+.big{font-size:clamp(72px,19vw,230px);font-weight:800;line-height:1;letter-spacing:-.045em;color:var(--ac);font-variant-numeric:tabular-nums}
+.unit{font-size:clamp(22px,4vw,48px);font-weight:600;color:var(--fg2);margin-left:.25em}
+/* reveal */
+.r{opacity:0;transform:translateY(26px);filter:blur(8px);transition:opacity .9s var(--e),transform .9s var(--e),filter .9s var(--e);transition-delay:calc(var(--i,0)*.14s + .2s)}
+.on .r{opacity:1;transform:none;filter:none}
+.w{display:inline-block}
+/* bars (the preferred motion) */
+.bars{display:grid;gap:clamp(14px,2.6vh,26px);width:100%}
+.br{display:grid;grid-template-columns:minmax(120px,240px) 1fr auto;gap:8px 20px;align-items:center}
+.bl{font-size:clamp(15px,2vw,22px);font-weight:500}
+.bar{height:12px;border-radius:6px;background:var(--tr);overflow:hidden}
+.bar>i{display:block;height:100%;width:0;border-radius:6px;background:var(--c,var(--ac));transition:width 1.5s var(--e) calc(var(--i,0)*.16s + .6s)}
+.on .bar>i{width:var(--w)}
+.bv{font-size:clamp(18px,2.6vw,30px);font-weight:700;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.br{grid-template-columns:1fr auto}.br .bl{grid-column:1/-1}}
+.cw{position:relative;width:100%;height:clamp(240px,46vh,420px)}
+.cw.sq{max-width:420px;height:clamp(220px,40vh,360px);margin-inline:auto}
+/* flow */
+.fl{display:flex;flex-wrap:wrap;align-items:stretch;justify-content:center;gap:12px;width:100%}
+.fs{flex:1 1 220px;max-width:340px;display:grid;gap:6px;align-content:start;padding:20px;border-radius:20px;background:var(--tr);text-align:left}
+.fs b{font-size:clamp(18px,2.4vw,26px);line-height:1.3}
+.fs span{font-size:15px;line-height:1.55;color:var(--fg2)}
+.ar{align-self:center;font-size:28px;color:var(--ac)}
+@media (max-width:760px){.ar{transform:rotate(90deg);width:100%;text-align:center}.on .ar{transform:rotate(90deg)}.fs{max-width:none}}
+/* compare */
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;width:100%}
+.cp{padding:clamp(18px,3vw,32px);border-radius:24px;background:var(--tr);display:grid;gap:14px;align-content:start}
+.cp h4{font-size:clamp(18px,2.4vw,26px);font-weight:700}
+.cp.yes h4{color:var(--ac)}.cp.no h4{color:var(--ac2)}
+.cp ul{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.cp li{font-size:clamp(15px,1.9vw,19px);line-height:1.5;padding-left:18px;position:relative}
+.cp li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.5}
+/* checks */
+.cks{display:grid;gap:14px;width:100%}
+.ck{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:18px 22px;border-radius:20px;background:var(--tr)}
+.ck b{font-size:clamp(16px,2.2vw,24px);font-weight:600;line-height:1.4}
+.ck span.s{display:block;font-size:14px;color:var(--fg2);font-weight:400;margin-top:2px}
+.mk{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--bg);background:var(--ac);transform:scale(0);transition:transform .6s var(--e) calc(var(--i,0)*.14s + .6s)}
+.mk.n{background:var(--ac2)}
+.on .mk{transform:scale(1)}
+/* illustrations */
+.cap2{font-size:clamp(13px,1.5vw,15px);color:var(--fg2);text-align:center;max-width:44em;margin-inline:auto;line-height:1.6}
+.pgs{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,64px);justify-content:center;width:100%}
+.pg{flex:1 1 280px;max-width:560px;display:grid;gap:14px}
+.pg svg{width:100%;height:auto;display:block}
+.pg .dg{opacity:0;transition:opacity 1.2s var(--e) .3s}.on .pg .dg{opacity:1}
+.pg .hi circle{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(0)}
+.on .pg .hi circle{animation:pop .5s var(--e) both;animation-delay:calc(var(--d,0)*1ms + .9s)}
+@keyframes pop{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+.pc{display:grid;gap:4px;text-align:center}.pn{font-size:clamp(34px,6vw,64px);font-weight:800;color:var(--ac);letter-spacing:-.03em}.pc span{font-size:14px;color:var(--fg2);line-height:1.5}
+.bz{display:grid;gap:0;width:100%}
+.bz .rt{text-align:center;font-size:clamp(17px,2.4vw,26px);font-weight:700}
+.bz svg{width:100%;height:auto;display:block}
+.bz path{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s var(--e) calc(var(--i,0)*.3s + .7s)}
+.on .bz path{stroke-dashoffset:0}
+.bz .lv{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center}
+.bz .lv b{display:block;font-size:clamp(16px,2.2vw,24px)}.bz .lv span{font-size:clamp(13px,1.7vw,17px);color:var(--fg2)}
+.sc2 svg{width:100%;height:auto;display:block;max-width:560px;margin-inline:auto}
+.beam{transform-box:view-box;transform-origin:100px 30px;transition:transform 2s var(--e) 1s}
+.on .beam{transform:rotate(var(--tilt,-8deg))}
+.sc2 .lv{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center}.sc2 .lv b{display:block;font-size:clamp(16px,2.2vw,24px)}.sc2 .lv span{font-size:clamp(13px,1.7vw,17px);color:var(--fg2)}
+.tl{display:grid;gap:18px;width:100%}
+.tln{height:4px;border-radius:2px;background:var(--tr);overflow:hidden}.tln i{display:block;height:100%;width:0;background:var(--ac);transition:width 2.6s var(--e) .6s}.on .tln i{width:100%}
+.tl ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:12px;text-align:center}
+.tl li{display:grid;gap:6px;justify-items:center}.tl li b{font-size:clamp(14px,1.8vw,18px)}.tl li .dt{width:14px;height:14px;border-radius:50%;background:var(--ac)}
+.eyes{display:flex;flex-wrap:wrap;gap:clamp(16px,4vw,48px);justify-content:center;width:100%}
+.ey{flex:1 1 240px;max-width:340px;display:grid;gap:10px;text-align:center}.ey svg{width:100%;height:auto;display:block}.ey b{font-size:clamp(15px,2vw,20px)}
+.ey .sp{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.4s var(--e) 1s}.on .ey .sp{stroke-dashoffset:0}
+.ey .fx{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(0)}.on .ey .fx{animation:pop .5s var(--e) both;animation-delay:calc(var(--d,0)*1ms + 1s)}
+.sh{display:flex;gap:clamp(24px,8vw,96px);justify-content:center;align-items:flex-end;width:100%}
+.shc{flex:1 1 0;max-width:260px;display:grid;gap:12px;text-align:center}
+.sht{position:relative;height:clamp(160px,30vh,260px);border-bottom:1px solid var(--ln)}
+.gh{position:absolute;bottom:0;left:18%;right:18%;border:1.5px dashed var(--ln);border-bottom:0;border-radius:12px 12px 0 0}
+.nw{position:absolute;bottom:0;left:18%;right:18%;height:var(--f);background:var(--c);border-radius:12px 12px 0 0;transition:height 1.8s var(--e) 1s}.on .nw{height:var(--t)}
+.shc b{font-size:clamp(15px,2vw,20px)}
+.st{display:flex;align-items:flex-end;gap:10px;height:clamp(200px,36vh,320px);width:100%}
+.stp{flex:1;height:var(--h);border-radius:14px 14px 0 0;background:var(--tr);border-top:3px solid var(--ac);display:flex;align-items:flex-end;padding:14px;font-size:clamp(15px,2vw,22px);font-weight:600}
+.lp svg{width:100%;height:auto;display:block}
+.lp .nd{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.6)}.on .lp .nd{animation:pop .6s var(--e) both;animation-delay:calc(var(--d,0)*1ms + .6s)}
+.lp .rg{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 3s var(--e) .4s}.on .lp .rg{stroke-dashoffset:0}
+.sc{justify-items:start}.sc .ref{font-size:clamp(14px,1.8vw,18px);line-height:1.6;color:var(--fg)}
+.sc a{color:var(--ac);text-decoration:none;font-weight:600}
+/* chrome */
+#ui{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,4vw,40px) calc(14px + env(safe-area-inset-bottom));pointer-events:none}
+#ui>*{pointer-events:auto}
+#ap{font:inherit;font-size:13px;color:var(--fg2);background:transparent;border:1px solid var(--ln);border-radius:999px;padding:7px 14px;cursor:pointer;min-height:36px}
+#ap[aria-pressed="true"]{color:var(--bg);background:var(--fg);border-color:var(--fg)}
+#ap:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+#pg{flex:1;height:3px;border-radius:2px;background:var(--tr);overflow:hidden}#pg i{display:block;height:100%;width:0;background:var(--fg);transition:width .6s var(--e)}
+#ct{font-size:13px;color:var(--fg2);font-variant-numeric:tabular-nums;min-width:3.5em;text-align:right}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.r{opacity:1;transform:none;filter:none}.bar>i{width:var(--w)}.nw{height:var(--t)}.mk{transform:none}.beam{transform:rotate(var(--tilt,-8deg))}.pg .dg,.pg .hi circle,.lp .nd,.ey .fx{opacity:1;transform:none}.bz path,.ey .sp,.lp .rg{stroke-dashoffset:0}.tln i{width:100%}}
+
+.fl.na .fs{flex:1 1 240px;max-width:none}.fs b{display:block}
+.fl.na .fs{padding:clamp(18px,2.4vw,28px)}.fl.na .fs b{font-size:clamp(18px,2.4vw,26px)}.fl.na .fs span{font-size:clamp(15px,1.9vw,20px);line-height:1.55}
+.bz svg{max-height:30vh}.sc2 svg{max-height:34vh}.lp svg{max-height:46vh}
+</style></head><body><main id="deck" aria-live="off"></main><div id="ui"><button id="ap" type="button" aria-pressed="false">▶ 자동 재생</button><div id="pg" aria-hidden="true"><i></i></div><span id="ct"></span></div><script>window.DECK={"slides": [{"t": "title", "k": "Vanhoyweghen et al. (2026) · arXiv 2610.27881", "h": "그럴듯한 피드백이 성적을 올리는가", "sub": "GPT-5.1 피드백의 품질 평가와 시험 성적 효과", "badge": "arXiv 워킹페이퍼 · 동료심사 전"}, {"t": "say", "h": "한눈에 보는 네 가지", "sub": "연습 문제 생성은 95.5% 강점, 진단적 구체성은 41.1% · 최저 점수 답안의 피드백이 덜 실행 가능 · 성적 효과는 4번의 비교 모두 유의하지 않음 · 출석·노출과의 상관은 있으나 피드백의 기여는 분리 불가"}, {"t": "say", "h": "서론: 피드백 자동화는 가장 빠르게 퍼지는 용도다.", "sub": "손글씨 답안의 이미지 인식과 채점까지 가능해지면서 교수자 노동 없이 개별 피드백을 제공한다는 약속이 현실이 됐습니다. 그러나 생성된 피드백의 품질 평가와 학습 효과 검증은 분리되어야 하며 둘을 결합한 연구는 드뭅니다."}, {"t": "pts", "k": "이론적 논의", "h": "효과적 피드백의 조건", "steps": [{"t": "진단적 구체성", "d": "어디가 왜 틀렸는지를 짚는 것"}, {"t": "실행 가능성", "d": "학생이 바로 따라 할 수 있는 지시"}, {"t": "질과 효과의 분리", "d": "그럴듯한 피드백을 생성하는 능력과 성적을 움직이는 능력은 다른 명제"}, {"t": "이 논문의 질문", "d": "후자를 실험으로 묻는다"}]}, {"t": "pts", "k": "개념 정의", "h": "이 연구의 핵심 개념", "steps": [{"t": "교차(crossover) 설계", "d": "학생이 피드백을 받는 문항과 받지 않는 문항을 교차 배정해 내적 비교"}, {"t": "보너스 테스트", "d": "주간 낮은 이해관계의 연습 테스트"}, {"t": "강점 비율", "d": "평가 기준에서 강점으로 채점된 비율"}, {"t": "식별 실패", "d": "효과가 없다는 증거가 아니라 설계로 효과를 분리하지 못한 상태"}], "note": "이 연구에서 쓰이는 의미로 정리한 개념 정의입니다."}, {"t": "pts", "k": "연구문제", "h": "세 가지 질문", "steps": [{"t": "RQ1", "d": "LLM이 만든 피드백과 연습 문제의 품질은 어떠한가"}, {"t": "RQ2", "d": "피드백은 이후 시험 성적을 높이는가"}, {"t": "RQ3", "d": "출석·피드백 노출과 성적은 어떻게 연관되는가"}]}, {"t": "num", "k": "방법론 1 · 표본", "n": "579", "unit": "명", "label": "영어 코호트 343명 + 네덜란드어 코호트 236명 (대학 수학 과목)", "note": "6회의 주간 보너스 테스트를 사용합니다."}, {"t": "pts", "k": "방법론 2 · 두 부분 설계", "h": "품질 평가와 효과 검증", "steps": [{"t": "품질 평가", "d": "여섯 명의 평가자가 영어 코호트 세 과업의 157개 메시지를 여섯 기준(0-3점)으로 채점"}, {"t": "효과 검증", "d": "1차와 3차 테스트는 피드백을 받는 문항과 받지 않는 문항을 고정 교차 배정"}, {"t": "나머지 테스트", "d": "출석자 전원이 피드백을 받음"}, {"t": "성과 분석", "d": "동일 능력을 측정하는 후속 시험 문항을 피드백 수령 여부로 비교"}]}, {"t": "chart", "k": "결과 1 · 품질의 지도", "h": "평가 기준별 강점 비율 (%)", "kind": "bar", "labels": ["연습 문제", "진단적 구체성", "명료성·어조"], "datasets": [{"label": "강점 비율", "data": [95.5, 41.1, 33.4], "show": ["95.5%", "41.1%", "33.4%"], "c": ["ac", "ac2", "ac2"]}], "min": 0, "max": 100, "note": "다음에 무엇을 연습할까에는 강하지만 이 답이 왜 틀렸는가에는 약합니다."}, {"t": "chk", "k": "결과 2 · 약점의 위치", "h": "가장 도움이 필요한 학생에게 집중", "rows": [{"t": "최저 점수 답안에 대한 피드백이 덜 실행 가능한 것으로 평가되었다", "s": null, "m": "y"}, {"t": "자동 피드백의 한계가 보통의 학생이 아니라 도움이 가장 필요한 학생에게서 먼저 나타난다", "s": null, "m": "y"}, {"t": "형평성 함의가 있는 발견이다", "s": null, "m": "y"}]}, {"t": "chk", "k": "결과 3 · 성과 효과", "h": "관찰되지 않는다", "rows": [{"t": "관련 시험 문항의 네 번의 비교에서 피드백 수령 여부의 차이는 조정 후 모두 유의하지 않았다", "s": null, "m": "n"}, {"t": "교차 설계의 내적 비교에서도 피드백의 독립적 기여는 확인되지 않았다", "s": null, "m": "n"}]}, {"t": "say", "h": "결과 4 · 연관과 인과의 분리", "sub": "출석과 피드백 노출이 많은 학생의 시험 점수는 높았습니다. 하지만 그 상관에서 피드백 자체의 기여를 출석과 연습의 효과로부터 분리할 수 없었습니다. 피드백이 효과가 없었다는 증거라기보다 이 설계로는 효과가 식별되지 않는다는 것이 정확한 독해입니다."}, {"t": "pts", "k": "해설 · 논문에는 없는 내용", "h": "논문에는 없는 내용 1 · 무효과를 읽는 법", "steps": [{"t": "정확한 명제", "d": "LLM 피드백은 효과가 없다가 아니라, GPT-5.1의 이 형식의 피드백이 이 과목의 이 측정에서 성적을 움직이지 못했다입니다."}, {"t": "희석 요인", "d": "보너스 테스트 설계의 낮은 강제력과 출석 변동은 효과를 희석시킬 수 있습니다 (원문 리뷰의 해석)."}, {"t": "수업 팁", "d": "효과 부재의 증거와 식별 실패를 구분해 가르치세요."}], "note": "이 장은 논문의 주장이 아니라 해설자의 해석입니다. 원문과 구분해서 읽어 주세요."}, {"t": "pts", "k": "해설 · 논문에는 없는 내용", "h": "논문에는 없는 내용 2 · 적용의 한계", "steps": [{"t": "조건 의존", "d": "낮은 이해관계, 손글씨 수학이라는 형식에서의 결과입니다. 다른 과목, 다른 LLM, 더 강한 교수 통합 설계에서는 달라질 수 있습니다."}, {"t": "금지된 독법", "d": "이 무효과를 AI 피드백 도입 중단의 근거로 쓰는 것은 검증되지 않은 적용입니다."}, {"t": "성취 미측정", "d": "관심과 흥미가 성취로 이어지는 것과 무관한 결과입니다."}], "note": "이 장은 논문의 주장이 아니라 해설자의 해석입니다. 원문과 구분해서 읽어 주세요."}, {"t": "chk", "k": "결론 · 의의", "h": "저자들의 해석", "rows": [{"t": "LLM 피드백은 보완적 지원으로서의 잠재성을 보이지만, 특히 최저 성취 학생에게는 교수자의 맞춤 지도가 여전히 필요하다", "s": null, "m": "y"}, {"t": "품질 평가의 약한 항목(진단적 구체성, 명료성)이 성과 무효과와 같은 방향을 가리킨다", "s": null, "m": "y"}, {"t": "생성물의 평점과 학습 성과를 같은 연구에서 독립적으로 측정했다", "s": null, "m": "y"}]}, {"t": "cmp", "h": "이 연구가 말하는 것, 말하지 않는 것", "l": {"h": "보여주는 것", "items": ["피드백 품질의 불균등한 지도", "이 설계에서 성적 효과가 관찰되지 않았다는 점", "출석·노출과 성적의 연관"]}, "r": {"h": "보여주지 않는 것", "items": ["피드백이 효과가 없다는 단정", "피드백의 독립적 기여", "다른 과목, 다른 LLM, 높은 이해관계 맥락", "동료심사를 거친 확정 결론"]}}, {"t": "pts", "k": "한계 상세", "h": "읽을 때의 주의", "steps": [{"t": "맥락", "d": "보너스 테스트라는 낮은 이해관계"}, {"t": "형식", "d": "손글씨 수학이라는 특정 형식"}, {"t": "조합", "d": "GPT-5.1, 특정 과목의 조합"}, {"t": "심사", "d": "arXiv 워킹페이퍼"}]}, {"t": "pts", "k": "후속 연구", "h": "남은 질문", "steps": [{"t": "강한 통합", "d": "교수 통합이 강한 설계"}, {"t": "다른 과목", "d": "수학 밖에서의 재현"}, {"t": "취약 학생", "d": "저성취 학생을 위한 피드백 개선"}]}, {"t": "pts", "k": "생각해 볼 질문 · 해설", "h": "토론해 봅시다", "steps": [{"t": "학생", "d": "AI 피드백을 받아 보았다면 어디가 도움이 되었는가"}, {"t": "설계", "d": "진단적 구체성을 높이려면 무엇이 필요할까"}, {"t": "통계", "d": "효과가 없다는 증거와 식별 실패는 어떻게 구분하는가"}], "note": "정답이 없는 질문입니다. 논문의 결론을 넘어서는 생각을 해 보세요."}, {"t": "src", "ref": "Vanhoyweghen, A., Holst, V., Mobini, M., Van de Voorde, L., Vanleke, T., Algaba, A., Verboven, S., Guerry, M.-A., Van Droogenbroeck, F., & Ginis, V. (2026). Evaluating LLM-generated feedback on handwritten mathematics: Feedback quality and subsequent exam performance. arXiv. https://arxiv.org/abs/2610.27881", "status": "동료심사 전 프리프린트.", "post": "https://donghunc.kr/?p=1047"}]}</script><script>(()=>{
+'use strict';
+const D=window.DECK,$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const R=(h,i=0,tag='div',cls='')=>`<${tag} class="r ${cls}" style="--i:${i}">${h}</${tag}>`;
+const words=(t,b=0)=>String(t).split(' ').map((w,k)=>`<span class="r w" style="--i:${(b+k*.45).toFixed(2)}">${esc(w)}</span>`).join(' ');
+const kick=(s,i=0)=>s.k?R(esc(s.k),i,'p','kick'):'';
+const cap=(s,i)=>s.cap?R(esc(s.cap),i,'p','cap2'):'';
+let SI=0;
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+/* ---- illustrations ---- */
+function pict(s){return `<div class="pgs">${s.groups.map((g,gi)=>{
+  const cols=g.cols,rows=Math.ceil(g.total/cols),c=10,r=3.6,id=`gr${SI}_${gi}`,step=Math.min(45,1200/Math.max(1,g.on));
+  let dots='',hi='',defs='';
+  for(let n=0;n<g.total;n++){const x=(n%cols)*c+c/2,y=Math.floor(n/cols)*c+c/2,d=Math.round(n*step);
+    if(n+1<=Math.floor(g.on))hi+=`<circle cx="${x}" cy="${y}" r="${r+.5}" fill="var(--ac)" style="--d:${d}"/>`;
+    else if(n<g.on){const f=(g.on-n).toFixed(3);defs=`<linearGradient id="${id}"><stop offset="${f}" stop-color="var(--ac)"/><stop offset="${f}" stop-color="var(--ln)"/></linearGradient>`;hi+=`<circle cx="${x}" cy="${y}" r="${r+.5}" fill="url(#${id})" style="--d:${d}"/>`}
+    else dots+=`<circle cx="${x}" cy="${y}" r="${r}"/>`}
+  return `<div class="pg r" style="--i:${gi+1}"><svg viewBox="0 0 ${cols*c} ${rows*c}" role="img" aria-label="${esc(g.label)}"><defs>${defs}</defs><g class="dg" fill="var(--ln)">${dots}</g><g class="hi">${hi}</g></svg><div class="pc"><b class="pn">${esc(g.label)}</b><span>${esc(g.cap||'')}</span></div></div>`}).join('')}</div>`}
+function branch(s){return `<div class="bz">${R(esc(s.root),0,'div','rt')}<svg viewBox="0 0 200 100" aria-hidden="true">${s.br.map((b,i)=>{const n=s.br.length,x=n===1?100:30+140*i/(n-1);return `<path d="M100 4 C 100 54, ${x} 46, ${x} 96" stroke="${b.c||'var(--ac)'}" stroke-width="${b.w}" pathLength="1" style="--i:${i}"/>`}).join('')}</svg><div class="lv" style="grid-template-columns:repeat(${s.br.length},1fr)">${s.br.map((b,i)=>R(`<b>${esc(b.l)}</b><span>${esc(b.sub||'')}</span>`,i+3)).join('')}</div></div>`}
+function scale(s){const[l,rr]=s.sides;return `<div class="sc2"><svg viewBox="0 0 200 110" aria-hidden="true"><path d="M100 30 L88 100 L112 100 Z" fill="var(--ln)"/><g class="beam" style="--tilt:${s.tilt||-8}deg"><line x1="20" y1="30" x2="180" y2="30" stroke="var(--fg)" stroke-width="3" stroke-linecap="round"/><path d="M20 30 L8 62 M20 30 L32 62 M180 30 L168 62 M180 30 L192 62" stroke="var(--fg2)" stroke-width="1.2" fill="none"/><path d="M4 62 Q20 76 36 62 Z" fill="var(--ac)"/><path d="M164 62 Q180 76 196 62 Z" fill="var(--ac2)"/></g></svg><div class="lv">${R(`<b>${esc(l.l)}</b><span>${esc(l.sub)}</span>`,1)}${R(`<b>${esc(rr.l)}</b><span>${esc(rr.sub)}</span>`,2)}</div></div>`}
+function timeline(s){return `<div class="tl"><div class="tln r" style="--i:0"><i></i></div><ol>${s.pts.map((p,i)=>`<li class="r" style="--i:${i+1}"><span class="dt"></span><b>${esc(p.l)}</b></li>`).join('')}</ol></div>`}
+function eye(s){const mk=(spread,n,seed,rad,label,gi)=>{const f=rng(seed);let pts=[],pl='',dots='';
+  for(let k=0;k<n;k++){const a=f()*6.283,d=Math.sqrt(f())*spread,x=Math.max(20,Math.min(180,100+Math.cos(a)*d)),y=Math.max(24,Math.min(176,92+Math.sin(a)*d*1.1));pts.push([x,y])}
+  pl=pts.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ');
+  dots=pts.map((p,k)=>`<circle class="fx" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${rad}" fill="var(--ac)" fill-opacity=".85" style="--d:${k*150}"/>`).join('');
+  return `<div class="ey r" style="--i:${gi+1}"><svg viewBox="0 0 200 200" role="img" aria-label="${esc(label)}"><rect x="2" y="2" width="196" height="196" rx="18" fill="var(--tr)" stroke="var(--ln)"/><circle cx="100" cy="82" r="34" fill="none" stroke="var(--ln)" stroke-width="2"/><path d="M40 190 Q100 118 160 190" fill="none" stroke="var(--ln)" stroke-width="2"/><polyline class="sp" points="${pl}" pathLength="1" fill="none" stroke="var(--ac)" stroke-width="1.6" stroke-opacity=".7"/>${dots}</svg><b>${esc(label)}</b></div>`};
+  return `<div class="eyes">${mk(26,7,3,4,s.a,0)}${mk(78,12,9,7,s.b,1)}</div>`}
+function shift(s){return `<div class="sh">${s.items.map((it,i)=>`<div class="shc r" style="--i:${i+1}"><div class="sht"><div class="gh" style="height:${it.f}%"></div><div class="nw" style="--f:${it.f}%;--t:${it.t}%;--c:${it.c==='ac2'?'var(--ac2)':'var(--ac)'}"></div></div><b>${esc(it.l)}</b></div>`).join('')}</div>`}
+function stairs(s){const n=s.steps.length;return `<div class="st">${s.steps.map((p,i)=>`<div class="stp r" style="--i:${i+1};--h:${36+i*(60/Math.max(1,n-1))}%">${esc(p.l)}</div>`).join('')}</div>`}
+function loop(s){const n=s.nodes.length,cx=320,cy=180,rx=215,ry=130;
+  const path=`M${cx-rx} ${cy} a${rx} ${ry} 0 1 1 ${2*rx} 0 a${rx} ${ry} 0 1 1 ${-2*rx} 0`;
+  const nodes=s.nodes.map((t,k)=>{const a=(-90+k*360/n)*Math.PI/180,x=cx+rx*Math.cos(a),y=cy+ry*Math.sin(a);
+    const sp=[...t].map((c,j)=>c===' '?j:-1).filter(j=>j>=0).sort((a,b)=>Math.abs(a-t.length/2)-Math.abs(b-t.length/2))[0],parts=t.length>7&&sp!==undefined?[t.slice(0,sp),t.slice(sp+1)]:[t];
+    const tx=parts.map((p,j)=>`<tspan x="${x.toFixed(1)}" dy="${j?22:(parts.length>1?-2:7)}">${esc(p)}</tspan>`).join('');
+    return `<g class="nd" style="--d:${k*350}"><rect x="${(x-85).toFixed(1)}" y="${(y-30).toFixed(1)}" width="170" height="60" rx="16" fill="var(--tr)" stroke="${k===s.hl?'var(--ac)':'var(--ln)'}" stroke-width="${k===s.hl?2:1}"/><text x="${x.toFixed(1)}" y="${(y-(parts.length>1?8:0)).toFixed(1)}" fill="var(--fg)" font-size="19" font-weight="600" text-anchor="middle">${tx}</text></g>`}).join('');
+  return `<div class="lp"><svg viewBox="0 0 640 360" role="img" aria-label="${esc(s.nodes.join(' → '))}"><path class="rg" d="${path}" pathLength="1" fill="none" stroke="var(--ln)" stroke-width="2"/>${nodes}<circle r="6" fill="var(--ac)"><animateMotion dur="9s" repeatCount="indefinite" path="${path}"/></circle></svg></div>`}
+const ILL={pict,branch,scale,timeline,eye,shift,stairs,loop};
+
+/* ---- slide types ---- */
+const T={
+ title:s=>`<div class="in c">${kick(s,0)}<h1>${words(s.h,1)}</h1>${s.sub?R(esc(s.sub),6,'p','sub'):''}${s.badge?R(`<span class="pill">${esc(s.badge)}</span>`,7):''}</div>`,
+ say:s=>`<div class="in c"><h2>${words(s.h)}</h2>${s.sub?R(esc(s.sub),5,'p','sub'):''}</div>`,
+ num:s=>`<div class="in c">${kick(s,0)}${R(`<span class="big" data-to="${s.n}" data-dec="${s.dec||0}" data-pre="${esc(s.pre||'')}">${esc(s.pre||'')}${s.n}</span><span class="unit">${esc(s.unit||'')}</span>`,1)}${R(esc(s.label),2,'p','sub')}${s.note?R(esc(s.note),3,'p','note'):''}</div>`,
+ bars:s=>`<div class="in">${kick(s,0)}${s.h?R(esc(s.h),0,'h3'):''}<div class="bars">${s.rows.map((r,i)=>`<div class="br r" style="--i:${i+1}"><span class="bl">${esc(r.l)}</span><div class="bar"><i style="--w:${(r.v/s.max*100).toFixed(2)}%;--c:${r.c||'var(--ac)'};--i:${i}"></i></div><b class="bv">${esc(r.show)}</b></div>`).join('')}</div>${s.note?R(esc(s.note),5,'p','note'):''}</div>`,
+ chart:s=>`<div class="in">${kick(s,0)}${R(esc(s.h),0,'h3')}<div class="cw r ${s.kind==='doughnut'?'sq':''}" style="--i:1"><canvas role="img" aria-label="${esc(s.h)}"></canvas></div>${s.note?R(esc(s.note),3,'p','note'):''}</div>`,
+ pts:s=>T.flow(Object.assign({na:1},s)),
+ flow:s=>`<div class="in c">${kick(s,0)}${R(esc(s.h),0,'h3')}<div class="fl${s.na?" na":""}">${s.steps.map((p,i)=>`${i&&!s.na?`<span class="ar r" style="--i:${i+1}">→</span>`:''}<div class="fs r" style="--i:${i+1}"><b>${esc(p.t)}</b><span>${esc(p.d||'')}</span></div>`).join('')}</div>${s.note?R(esc(s.note),5,'p','note'):''}</div>`,
+ cmp:s=>`<div class="in">${R(esc(s.h),0,'h3')}<div class="cmp">${[s.l,s.r].map((p,pi)=>`<div class="cp ${pi?'no':'yes'} r" style="--i:${pi+1}"><h4>${esc(p.h)}</h4><ul>${p.items.map((t,k)=>`<li class="r" style="--i:${pi*3+k+2}">${esc(t)}</li>`).join('')}</ul></div>`).join('')}</div></div>`,
+ chk:s=>`<div class="in">${kick(s,0)}${R(esc(s.h),0,'h3')}<div class="cks">${s.rows.map((r,i)=>`<div class="ck r" style="--i:${i+1}"><span class="mk ${r.m==='n'?'n':''}" style="--i:${i+1}">${r.m==='n'?'✕':'✓'}</span><div><b>${esc(r.t)}</b>${r.s?`<span class="s">${esc(r.s)}</span>`:''}</div></div>`).join('')}</div>${s.note?R(esc(s.note),6,'p','note'):''}</div>`,
+ ill:s=>`<div class="in">${kick(s,0)}${R(esc(s.h),0,'h3')}${ILL[s.kind](s)}${cap(s,6)}</div>`,
+ src:s=>`<div class="in sc">${R('출처',0,'h3')}${R(esc(s.ref),1,'p','ref')}${R(esc(s.status),2,'p','note')}${s.post?R(`<a href="${esc(s.post)}" target="_blank" rel="noopener">블로그 원본 글 보기 →</a>`,3,'p'):''}${R('인포그래픽 제작: donghunc.kr | AI 활용 블로그',4,'p','note')}</div>`
+};
+
+/* ---- charts (Chart.js) ---- */
+const vl={id:'vl',afterDatasetsDraw(ch){const o=ch.options.plugins&&ch.options.plugins.vl;if(!o)return;const x=ch.ctx;x.save();x.fillStyle=o.color;x.font='700 '+o.size+'px '+o.font;x.textBaseline='middle';
+  ch.data.datasets.forEach((d,di)=>{const m=ch.getDatasetMeta(di);m.data.forEach((b,i)=>{const t=d.show&&d.show[i];if(!t)return;
+    if(ch.options.indexAxis==='y'){x.textAlign='left';x.fillText(t,b.x+10,b.y)}else{x.textAlign='center';x.fillText(t,b.x,d.data[i]<0?b.y+16:b.y-14)}})});x.restore()}};
+function mkChart(cv,s,slide){if(typeof Chart==='undefined')return;
+  const cs=getComputedStyle(document.documentElement),col=k=>(cs.getPropertyValue('--'+k).trim()||k),font='Pretendard Variable, Pretendard, sans-serif';
+  const dn=s.kind==='doughnut';
+  const ds=s.datasets.map(d=>({label:d.label,data:d.data,show:d.show,backgroundColor:Array.isArray(d.c)?d.c.map(col):col(d.c||'ac'),borderWidth:0,borderRadius:dn?0:8,borderSkipped:false,barPercentage:.6,categoryPercentage:.8}));
+  const hz=s.axis==='y',val=hz?'x':'y',cat=hz?'y':'x';
+  const opt={responsive:true,maintainAspectRatio:false,animation:{duration:RM?0:1800,easing:'easeOutQuart'},indexAxis:s.axis||'x',layout:{padding:{top:24,right:hz?70:8}},
+    plugins:{legend:{display:!!s.legend,position:'bottom',labels:{color:col('fg2'),font:{family:font,size:14},usePointStyle:true,padding:18}},tooltip:{enabled:true,backgroundColor:col('tr'),titleColor:col('fg'),bodyColor:col('fg2'),borderColor:col('ln'),borderWidth:1,titleFont:{family:font},bodyFont:{family:font}},vl:{color:col('fg'),size:17,font}}};
+  if(dn){opt.cutout='76%';opt.layout={padding:8};opt.plugins.vl=undefined}
+  else{opt.scales={[cat]:{grid:{display:false},border:{display:false},ticks:{color:col('fg2'),font:{family:font,size:14}}},[val]:{display:false,min:s.min||0,max:s.max}}}
+  const c=new Chart(cv,{type:s.kind==='line'?'line':(dn?'doughnut':'bar'),data:{labels:s.labels,datasets:ds},options:opt,plugins:[vl]});
+  (slide._ch=slide._ch||[]).push(c)}
+
+/* ---- count up ---- */
+const fmt=(v,d)=>v.toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d});
+function count(el){const to=+el.dataset.to,d=+el.dataset.dec,pre=el.dataset.pre||'';if(RM){el.textContent=pre+fmt(to,d);return}
+  const t0=performance.now(),dur=1800;el.textContent=pre+fmt(0,d);
+  (function f(t){const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,4);el.textContent=pre+fmt(to*e,d);if(p<1)requestAnimationFrame(f)})(t0)}
+
+/* ---- build + navigate ---- */
+const deck=$('#deck');
+deck.innerHTML=D.slides.map((s,i)=>{SI=i;return `<section class="slide" aria-hidden="true" aria-label="${i+1} / ${D.slides.length}">${T[s.t](s)}</section>`}).join('');
+const sl=$$('.slide',deck),N=sl.length;let cur=-1,timer=null;
+const ap=$('#ap');
+function enter(s,i){$$('.big[data-to]',s).forEach(count);$$('canvas',s).forEach(cv=>mkChart(cv,D.slides[i],s))}
+function leave(s){(s._ch||[]).forEach(c=>c.destroy());s._ch=[]}
+function go(i){i=Math.max(0,Math.min(N-1,i));if(i===cur)return;
+  if(cur>=0){sl[cur].classList.remove('on');sl[cur].setAttribute('aria-hidden','true');leave(sl[cur])}
+  cur=i;sl[i].classList.add('on');sl[i].setAttribute('aria-hidden','false');sl[i].scrollTop=0;enter(sl[i],i);
+  $('#pg i').style.width=((i+1)/N*100)+'%';$('#ct').textContent=(i+1)+' / '+N;
+  try{history.replaceState(null,'','#'+(i+1))}catch(e){}
+  if(i===N-1)stop()}
+const next=()=>go(cur+1),prev=()=>go(cur-1);
+function stop(){if(timer){clearInterval(timer);timer=null}ap.setAttribute('aria-pressed','false');ap.textContent='▶ 자동 재생'}
+function play(){stop();ap.setAttribute('aria-pressed','true');ap.textContent='❚❚ 정지';if(cur>=N-1)go(0);timer=setInterval(()=>{if(cur>=N-1)stop();else next()},12000)}
+ap.addEventListener('click',e=>{e.stopPropagation();timer?stop():play()});
+document.addEventListener('keydown',e=>{const k=e.key;
+  if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Enter'){if(e.target===ap)return;e.preventDefault();next()}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev()}
+  else if(k==='Home')go(0);else if(k==='End')go(N-1);
+  else if(k==='a'||k==='A')timer?stop():play()});
+deck.addEventListener('click',e=>{if(e.target.closest('a'))return;(e.clientX<innerWidth*.3)?prev():next()});
+let tx=null;deck.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+deck.addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>50){dx<0?next():prev()}});
+const h=parseInt((location.hash||'').slice(1),10);
+requestAnimationFrame(()=>requestAnimationFrame(()=>{go(h>0&&h<=N?h-1:0);if(!RM&&!h)play()}));
+})();
+</script></body></html>
