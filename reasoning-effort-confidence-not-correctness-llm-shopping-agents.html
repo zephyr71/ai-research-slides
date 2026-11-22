@@ -1,0 +1,220 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>추론 노력은 자신감만 높인다: LLM 쇼핑 에이전트</title><meta name="description" content="추론 노력은 자신감만 높인다: LLM 쇼핑 에이전트 · 인터랙티브 슬라이드"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script><style>/* Minimal keynote theme: black stage, one idea per slide, one accent. Light variant follows the OS. */
+:root{--bg:#000;--fg:#f5f5f7;--fg2:#a1a1a6;--ac:#2997ff;--ac2:#ff9f0a;--tr:#1c1c1e;--ln:#3a3a3c;--e:cubic-bezier(.2,.8,.2,1);color-scheme:dark}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#fff;--fg:#1d1d1f;--fg2:#6e6e73;--ac:#0071e3;--ac2:#c93400;--tr:#f2f2f7;--ln:#d2d2d7;color-scheme:light}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;overflow:hidden;word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+#deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;display:flex;overflow-y:auto;overflow-x:hidden;padding:clamp(24px,6vw,96px) clamp(20px,6vw,96px) clamp(64px,10vh,96px);opacity:0;visibility:hidden;transform:scale(.985);transition:opacity .7s var(--e),transform .9s var(--e),visibility 0s linear .7s}
+.slide.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.in{margin:auto;width:min(1080px,100%);display:grid;gap:clamp(16px,3.2vh,32px)}
+.in.c{text-align:center;justify-items:center}
+h1,h2,h3,h4,p{margin:0}
+h1{font-size:clamp(34px,8vw,92px);font-weight:800;line-height:1.1;letter-spacing:-.035em;text-wrap:balance}
+h2{font-size:clamp(30px,6.4vw,76px);font-weight:700;line-height:1.15;letter-spacing:-.03em;text-wrap:balance}
+h3{font-size:clamp(22px,3.6vw,40px);font-weight:700;line-height:1.25;letter-spacing:-.02em;text-wrap:balance}
+.kick{font-size:clamp(13px,1.6vw,16px);font-weight:600;color:var(--ac);letter-spacing:.02em}
+.sub{font-size:clamp(16px,2.3vw,26px);line-height:1.5;color:var(--fg2);max-width:30em;text-wrap:pretty}
+.note{font-size:clamp(13px,1.5vw,15px);line-height:1.6;color:var(--fg2);max-width:46em}
+.pill{display:inline-block;border:1px solid var(--ln);color:var(--fg2);border-radius:999px;padding:6px 16px;font-size:14px}
+.big{font-size:clamp(72px,19vw,230px);font-weight:800;line-height:1;letter-spacing:-.045em;color:var(--ac);font-variant-numeric:tabular-nums}
+.unit{font-size:clamp(22px,4vw,48px);font-weight:600;color:var(--fg2);margin-left:.25em}
+/* reveal */
+.r{opacity:0;transform:translateY(26px);filter:blur(8px);transition:opacity .9s var(--e),transform .9s var(--e),filter .9s var(--e);transition-delay:calc(var(--i,0)*.14s + .2s)}
+.on .r{opacity:1;transform:none;filter:none}
+.w{display:inline-block}
+/* bars (the preferred motion) */
+.bars{display:grid;gap:clamp(14px,2.6vh,26px);width:100%}
+.br{display:grid;grid-template-columns:minmax(120px,240px) 1fr auto;gap:8px 20px;align-items:center}
+.bl{font-size:clamp(15px,2vw,22px);font-weight:500}
+.bar{height:12px;border-radius:6px;background:var(--tr);overflow:hidden}
+.bar>i{display:block;height:100%;width:0;border-radius:6px;background:var(--c,var(--ac));transition:width 1.5s var(--e) calc(var(--i,0)*.16s + .6s)}
+.on .bar>i{width:var(--w)}
+.bv{font-size:clamp(18px,2.6vw,30px);font-weight:700;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.br{grid-template-columns:1fr auto}.br .bl{grid-column:1/-1}}
+.cw{position:relative;width:100%;height:clamp(240px,46vh,420px)}
+.cw.sq{max-width:420px;height:clamp(220px,40vh,360px);margin-inline:auto}
+/* flow */
+.fl{display:flex;flex-wrap:wrap;align-items:stretch;justify-content:center;gap:12px;width:100%}
+.fs{flex:1 1 220px;max-width:340px;display:grid;gap:6px;align-content:start;padding:20px;border-radius:20px;background:var(--tr);text-align:left}
+.fs b{font-size:clamp(18px,2.4vw,26px);line-height:1.3}
+.fs span{font-size:15px;line-height:1.55;color:var(--fg2)}
+.ar{align-self:center;font-size:28px;color:var(--ac)}
+@media (max-width:760px){.ar{transform:rotate(90deg);width:100%;text-align:center}.on .ar{transform:rotate(90deg)}.fs{max-width:none}}
+/* compare */
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;width:100%}
+.cp{padding:clamp(18px,3vw,32px);border-radius:24px;background:var(--tr);display:grid;gap:14px;align-content:start}
+.cp h4{font-size:clamp(18px,2.4vw,26px);font-weight:700}
+.cp.yes h4{color:var(--ac)}.cp.no h4{color:var(--ac2)}
+.cp ul{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.cp li{font-size:clamp(15px,1.9vw,19px);line-height:1.5;padding-left:18px;position:relative}
+.cp li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.5}
+/* checks */
+.cks{display:grid;gap:14px;width:100%}
+.ck{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:18px 22px;border-radius:20px;background:var(--tr)}
+.ck b{font-size:clamp(16px,2.2vw,24px);font-weight:600;line-height:1.4}
+.ck span.s{display:block;font-size:14px;color:var(--fg2);font-weight:400;margin-top:2px}
+.mk{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--bg);background:var(--ac);transform:scale(0);transition:transform .6s var(--e) calc(var(--i,0)*.14s + .6s)}
+.mk.n{background:var(--ac2)}
+.on .mk{transform:scale(1)}
+/* illustrations */
+.cap2{font-size:clamp(13px,1.5vw,15px);color:var(--fg2);text-align:center;max-width:44em;margin-inline:auto;line-height:1.6}
+.pgs{display:flex;flex-wrap:wrap;gap:clamp(24px,5vw,64px);justify-content:center;width:100%}
+.pg{flex:1 1 280px;max-width:560px;display:grid;gap:14px}
+.pg svg{width:100%;height:auto;display:block}
+.pg .dg{opacity:0;transition:opacity 1.2s var(--e) .3s}.on .pg .dg{opacity:1}
+.pg .hi circle{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(0)}
+.on .pg .hi circle{animation:pop .5s var(--e) both;animation-delay:calc(var(--d,0)*1ms + .9s)}
+@keyframes pop{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+.pc{display:grid;gap:4px;text-align:center}.pn{font-size:clamp(34px,6vw,64px);font-weight:800;color:var(--ac);letter-spacing:-.03em}.pc span{font-size:14px;color:var(--fg2);line-height:1.5}
+.bz{display:grid;gap:0;width:100%}
+.bz .rt{text-align:center;font-size:clamp(17px,2.4vw,26px);font-weight:700}
+.bz svg{width:100%;height:auto;display:block}
+.bz path{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.8s var(--e) calc(var(--i,0)*.3s + .7s)}
+.on .bz path{stroke-dashoffset:0}
+.bz .lv{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center}
+.bz .lv b{display:block;font-size:clamp(16px,2.2vw,24px)}.bz .lv span{font-size:clamp(13px,1.7vw,17px);color:var(--fg2)}
+.sc2 svg{width:100%;height:auto;display:block;max-width:560px;margin-inline:auto}
+.beam{transform-box:view-box;transform-origin:100px 30px;transition:transform 2s var(--e) 1s}
+.on .beam{transform:rotate(var(--tilt,-8deg))}
+.sc2 .lv{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center}.sc2 .lv b{display:block;font-size:clamp(16px,2.2vw,24px)}.sc2 .lv span{font-size:clamp(13px,1.7vw,17px);color:var(--fg2)}
+.tl{display:grid;gap:18px;width:100%}
+.tln{height:4px;border-radius:2px;background:var(--tr);overflow:hidden}.tln i{display:block;height:100%;width:0;background:var(--ac);transition:width 2.6s var(--e) .6s}.on .tln i{width:100%}
+.tl ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:12px;text-align:center}
+.tl li{display:grid;gap:6px;justify-items:center}.tl li b{font-size:clamp(14px,1.8vw,18px)}.tl li .dt{width:14px;height:14px;border-radius:50%;background:var(--ac)}
+.eyes{display:flex;flex-wrap:wrap;gap:clamp(16px,4vw,48px);justify-content:center;width:100%}
+.ey{flex:1 1 240px;max-width:340px;display:grid;gap:10px;text-align:center}.ey svg{width:100%;height:auto;display:block}.ey b{font-size:clamp(15px,2vw,20px)}
+.ey .sp{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 2.4s var(--e) 1s}.on .ey .sp{stroke-dashoffset:0}
+.ey .fx{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(0)}.on .ey .fx{animation:pop .5s var(--e) both;animation-delay:calc(var(--d,0)*1ms + 1s)}
+.sh{display:flex;gap:clamp(24px,8vw,96px);justify-content:center;align-items:flex-end;width:100%}
+.shc{flex:1 1 0;max-width:260px;display:grid;gap:12px;text-align:center}
+.sht{position:relative;height:clamp(160px,30vh,260px);border-bottom:1px solid var(--ln)}
+.gh{position:absolute;bottom:0;left:18%;right:18%;border:1.5px dashed var(--ln);border-bottom:0;border-radius:12px 12px 0 0}
+.nw{position:absolute;bottom:0;left:18%;right:18%;height:var(--f);background:var(--c);border-radius:12px 12px 0 0;transition:height 1.8s var(--e) 1s}.on .nw{height:var(--t)}
+.shc b{font-size:clamp(15px,2vw,20px)}
+.st{display:flex;align-items:flex-end;gap:10px;height:clamp(200px,36vh,320px);width:100%}
+.stp{flex:1;height:var(--h);border-radius:14px 14px 0 0;background:var(--tr);border-top:3px solid var(--ac);display:flex;align-items:flex-end;padding:14px;font-size:clamp(15px,2vw,22px);font-weight:600}
+.lp svg{width:100%;height:auto;display:block}
+.lp .nd{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.6)}.on .lp .nd{animation:pop .6s var(--e) both;animation-delay:calc(var(--d,0)*1ms + .6s)}
+.lp .rg{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 3s var(--e) .4s}.on .lp .rg{stroke-dashoffset:0}
+.sc{justify-items:start}.sc .ref{font-size:clamp(14px,1.8vw,18px);line-height:1.6;color:var(--fg)}
+.sc a{color:var(--ac);text-decoration:none;font-weight:600}
+/* chrome */
+#ui{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,4vw,40px) calc(14px + env(safe-area-inset-bottom));pointer-events:none}
+#ui>*{pointer-events:auto}
+#ap{font:inherit;font-size:13px;color:var(--fg2);background:transparent;border:1px solid var(--ln);border-radius:999px;padding:7px 14px;cursor:pointer;min-height:36px}
+#ap[aria-pressed="true"]{color:var(--bg);background:var(--fg);border-color:var(--fg)}
+#ap:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+#pg{flex:1;height:3px;border-radius:2px;background:var(--tr);overflow:hidden}#pg i{display:block;height:100%;width:0;background:var(--fg);transition:width .6s var(--e)}
+#ct{font-size:13px;color:var(--fg2);font-variant-numeric:tabular-nums;min-width:3.5em;text-align:right}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.r{opacity:1;transform:none;filter:none}.bar>i{width:var(--w)}.nw{height:var(--t)}.mk{transform:none}.beam{transform:rotate(var(--tilt,-8deg))}.pg .dg,.pg .hi circle,.lp .nd,.ey .fx{opacity:1;transform:none}.bz path,.ey .sp,.lp .rg{stroke-dashoffset:0}.tln i{width:100%}}
+
+.fl.na .fs{flex:1 1 240px;max-width:none}.fs b{display:block}
+.fl.na .fs{padding:clamp(18px,2.4vw,28px)}.fl.na .fs b{font-size:clamp(18px,2.4vw,26px)}.fl.na .fs span{font-size:clamp(15px,1.9vw,20px);line-height:1.55}
+.bz svg{max-height:30vh}.sc2 svg{max-height:34vh}.lp svg{max-height:46vh}
+</style></head><body><main id="deck" aria-live="off"></main><div id="ui"><button id="ap" type="button" aria-pressed="false">▶ 자동 재생</button><div id="pg" aria-hidden="true"><i></i></div><span id="ct"></span></div><script>window.DECK={"slides": [{"t": "title", "k": "Krishnamoorthy & Han (2026) · arXiv", "h": "더 오래 생각해도 더 잘 고르지는 않는다", "sub": "10개 프런티어 LLM × 저·중·고 추론 노력 × 세 쇼핑 데이터셋", "badge": "arXiv 프리프린트 · 동료심사 전"}, {"t": "say", "h": "한눈에 보는 네 가지", "sub": "정확도 개선은 대부분 모델에서 유의하지 않음(WebShop 10개 중 3개) · 자신감은 WebShop 9/10 모델에서 유의하게 상승 · 보정은 노력이 아니라 모델 고유의 속성 · 모델 간 오류 상관 0.7~0.8"}, {"t": "say", "h": "서론: 수학에서 통한 법칙이 쇼핑에서도 통하는가.", "sub": "수학·코딩 벤치마크에서는 추론 시간 계산량을 늘리면 정확도가 개선된다는 증거가 있습니다. 그러나 쇼핑은 다단계 추론보다 상품 정보를 꼼꼼히 읽는 능력이 병목이어서 같은 법칙이 성립하는지 불명확합니다."}, {"t": "pts", "k": "이론적 논의 1", "h": "보정이 중요한 이유", "steps": [{"t": "안전장치", "d": "에이전트가 신뢰도를 잘 보정하면 불확실할 때 결정을 사용자에게 되돌릴 수 있음"}, {"t": "공백", "d": "추론 노력이 보정을 개선하는지는 거의 검증되지 않았음"}]}, {"t": "pts", "k": "이론적 논의 2", "h": "이 연구의 위치", "steps": [{"t": "맥락", "d": "에이전트 쇼핑이라는 구체적 배포 맥락"}, {"t": "분해", "d": "추론 노력, 정확도, 자신감의 삼각관계를 체계적으로 분해"}]}, {"t": "pts", "k": "개념 정의", "h": "이 연구의 핵심 개념", "steps": [{"t": "추론 노력", "d": "제공사가 정의한 low/medium/high 설정"}, {"t": "보정(calibration)", "d": "자신감이 실제 정답률과 맞는 정도"}, {"t": "ECE·Brier·AUROC", "d": "보정을 재는 지표"}, {"t": "쌍별 오류 상관", "d": "두 모델이 같은 과제에서 함께 틀리는 정도"}], "note": "이 연구에서 쓰이는 의미로 정리한 개념 정의입니다."}, {"t": "pts", "k": "연구문제", "h": "핵심 질문", "steps": [{"t": "RQ1", "d": "추론 노력은 정확도를 높이는가"}, {"t": "RQ2", "d": "추론 노력은 자신감과 보정을 바꾸는가"}, {"t": "RQ3", "d": "모델들의 오류는 서로 독립적인가"}]}, {"t": "num", "k": "방법론 1 · 자료", "n": "37128", "unit": "개 응답", "label": "이 중 37,099개(99.92%)가 파싱 가능", "note": "쇼핑 질의, 순서를 섞은 10개 후보, 정확히 하나의 정답으로 구성했습니다. 전체 목록을 미리 제시해 탐색·내비게이션을 제거했습니다. 10개 모델은 OpenRouter API로 동일 프롬프트를 사용했습니다."}, {"t": "pts", "k": "방법론 2 · 세 데이터셋", "h": "정답의 정의가 다름", "steps": [{"t": "WebShop", "d": "보상 함수가 1인 상품, 다중모달 과제 496개"}, {"t": "SQID", "d": "실제 Amazon 검색 질의에 인간이 Exact로 주석한 상품, 다중모달 과제 500개"}, {"t": "WANDS", "d": "Wayfair 텍스트 전용 가구 데이터의 Exact 상품, 과제 330개"}]}, {"t": "chart", "k": "결과 1 · 정확도 대 자신감", "h": "저→고 노력 전환에서 유의한 변화를 보인 모델 수 (10개 중)", "kind": "bar", "labels": ["정확도(WebShop)", "자신감(WebShop)", "자신감(SQID)", "자신감(WANDS)"], "datasets": [{"label": "모델 수", "data": [3, 9, 5, 6], "show": ["3개", "9개", "5개", "6개"], "c": ["ac2", "ac", "ac", "ac"]}], "min": 0, "max": 10, "note": "정확도가 유의하게 개선된 WebShop의 3개 모델은 Qwen 3.8 Max, Gemini 3.1 Pro, Gemini 4 Argon입니다. 다른 두 데이터셋에서는 더 적었습니다. WebShop의 28개 조건에서 성공률은 74.0~88.1%였습니다."}, {"t": "chk", "k": "결과 2 · 과신의 정도", "h": "모델마다 갈림", "rows": [{"t": "8개 모델은 WebShop에서 7~16%p, WANDS에서 10~20%p, SQID에서 27~33%p 과신", "s": null, "m": "n"}, {"t": "두 Claude 모델은 WebShop에서 소규모 과소신뢰(-2.8, -6.7%p)", "s": null, "m": "y"}, {"t": "보정은 노력 수준과 무관하게 모델 고유의 순위를 유지, ECE 변화는 대부분 2포인트 미만", "s": null, "m": "y"}, {"t": "실제 추론 토큰 증가도 불균등: Qwen 3.8 Max는 394→2,033토큰, GPT-6 Astra와 GPT-6.1 Sol은 고노력에서도 100토큰 이하", "s": null, "m": "y"}]}, {"t": "chk", "k": "결과 3 · 함께 틀린다", "h": "독립 가정과 크게 다름", "rows": [{"t": "WebShop 저노력 기준 493개 과제 중 319개를 10개 모델 전원이 맞힘(독립 가정 예측 약 52개)", "s": null, "m": "y"}, {"t": "47개는 전원이 틀림(독립 가정 예측 사실상 0)", "s": null, "m": "n"}, {"t": "쌍별 오류 상관: WebShop 0.70~0.71, SQID 0.79~0.81, WANDS 0.77~0.81", "s": null, "m": "y"}, {"t": "공동 실패는 크기·향·가격 같은 부차 제약을 놓치거나 제목이 거의 같은 대체재에 속는 경우", "s": null, "m": "n"}]}, {"t": "pts", "k": "해설 · 논문에는 없는 내용", "h": "논문에는 없는 내용 1 · 반론의 여지", "steps": [{"t": "범위", "d": "고정된 10개 후보 목록은 탐색·페이지네이션·다단계 내비게이션을 검증하지 않으므로, 실제 배포된 쇼핑 에이전트에서는 노력이 더 중요할 수 있다는 반론이 열려 있다는 것이 해설자의 평가입니다."}, {"t": "노력의 의미", "d": "노력 단계는 제공사 정의 추상화라 동일한 계산량이 아닙니다."}], "note": "이 장은 논문의 주장이 아니라 해설자의 해석입니다. 원문과 구분해서 읽어 주세요."}, {"t": "pts", "k": "해설 · 논문에는 없는 내용", "h": "논문에는 없는 내용 2 · 레이블 잡음", "steps": [{"t": "잡음", "d": "WebShop 유인 상품의 약 15%가 논쟁 가능하고 SQID·WANDS는 크라우드 주석 잡음이 있습니다."}, {"t": "상관 부풀림", "d": "잘못된 레이블의 과제는 모든 모델을 틀린 것으로 계산하므로 오류 상관 추정치를 부풀릴 수 있다는 것이 해설자의 해석입니다."}, {"t": "실행", "d": "자신감은 한 번만 추출했고 조건당 1회 실행이라 실행 간 분산은 과제 수준 잡음에 흡수되었습니다."}], "note": "이 장은 논문의 주장이 아니라 해설자의 해석입니다. 원문과 구분해서 읽어 주세요."}, {"t": "chk", "k": "결론 · 의의", "h": "저자들의 해석", "rows": [{"t": "쇼핑 선택은 추론이 아니라 읽기가 병목이어서 낮은 노력에서 부차 제약을 놓친 모델은 더 오래 생각해도 회복하지 못한다", "s": null, "m": "y"}, {"t": "긴 추론 궤적은 확인했다는 경험을 제공해 자신감 보고만 부풀린다", "s": null, "m": "y"}, {"t": "보정은 튜닝 목표가 아니라 모델 선택 기준으로 다뤄야 한다", "s": null, "m": "y"}, {"t": "오류 상관이 0.7~0.8이면 앙상블이나 세컨드 오피니언의 정보 회복량은 독립 가정이 시사하는 것보다 적다", "s": null, "m": "y"}]}, {"t": "cmp", "h": "이 연구가 말하는 것, 말하지 않는 것", "l": {"h": "보여주는 것", "items": ["세 데이터셋·10개 모델에서 노력을 올려도 자신감이 정확도보다 더 오르는 패턴", "보정은 모델 고유의 속성", "프런티어 모델의 오류가 강하게 상관"]}, "r": {"h": "보여주지 않는 것", "items": ["탐색을 포함한 실제 쇼핑 에이전트의 결과", "동일 계산량 조건의 비교", "모델 합의가 옳다는 강한 증거", "동료심사를 거친 확정 결론"]}}, {"t": "pts", "k": "한계 상세", "h": "읽을 때의 주의", "steps": [{"t": "설계", "d": "고정된 10개 후보, 탐색 요소 제거"}, {"t": "레이블", "d": "정답 레이블 잡음"}, {"t": "측정", "d": "자신감은 0~10 정수 한 번 추출"}, {"t": "반복", "d": "조건당 1회 실행"}]}, {"t": "pts", "k": "후속 연구", "h": "남은 질문", "steps": [{"t": "탐색 포함", "d": "내비게이션 과제에서의 노력 효과"}, {"t": "보정 개선", "d": "노력 외 보정 개선 방법"}, {"t": "독립 모델", "d": "오류 상관이 낮은 모델 조합"}]}, {"t": "pts", "k": "생각해 볼 질문 · 해설", "h": "토론해 봅시다", "steps": [{"t": "설계", "d": "쇼핑 에이전트를 고를 때 정확도와 보정 중 무엇을 볼까"}, {"t": "안전", "d": "에이전트가 불확실할 때 사용자에게 돌려주려면 무엇이 필요할까"}, {"t": "앙상블", "d": "여러 모델에게 물어보는 것은 왜 생각보다 덜 효과적일까"}], "note": "정답이 없는 질문입니다. 논문의 결론을 넘어서는 생각을 해 보세요."}, {"t": "src", "ref": "Krishnamoorthy, A., & Han, X. Y. (2026). Thinking harder doesn’t lead to better choices: Reasoning effort increases the confidence but not the correctness of LLM shopping agents [Preprint]. arXiv. https://doi.org/10.48550/arXiv.2611.22033", "status": "동료심사 전 프리프린트(arXiv).", "post": "https://donghunc.kr/?p=1221"}]}</script><script>(()=>{
+'use strict';
+const D=window.DECK,$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const RM=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const R=(h,i=0,tag='div',cls='')=>`<${tag} class="r ${cls}" style="--i:${i}">${h}</${tag}>`;
+const words=(t,b=0)=>String(t).split(' ').map((w,k)=>`<span class="r w" style="--i:${(b+k*.45).toFixed(2)}">${esc(w)}</span>`).join(' ');
+const kick=(s,i=0)=>s.k?R(esc(s.k),i,'p','kick'):'';
+const cap=(s,i)=>s.cap?R(esc(s.cap),i,'p','cap2'):'';
+let SI=0;
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+/* ---- illustrations ---- */
+function pict(s){return `<div class="pgs">${s.groups.map((g,gi)=>{
+  const cols=g.cols,rows=Math.ceil(g.total/cols),c=10,r=3.6,id=`gr${SI}_${gi}`,step=Math.min(45,1200/Math.max(1,g.on));
+  let dots='',hi='',defs='';
+  for(let n=0;n<g.total;n++){const x=(n%cols)*c+c/2,y=Math.floor(n/cols)*c+c/2,d=Math.round(n*step);
+    if(n+1<=Math.floor(g.on))hi+=`<circle cx="${x}" cy="${y}" r="${r+.5}" fill="var(--ac)" style="--d:${d}"/>`;
+    else if(n<g.on){const f=(g.on-n).toFixed(3);defs=`<linearGradient id="${id}"><stop offset="${f}" stop-color="var(--ac)"/><stop offset="${f}" stop-color="var(--ln)"/></linearGradient>`;hi+=`<circle cx="${x}" cy="${y}" r="${r+.5}" fill="url(#${id})" style="--d:${d}"/>`}
+    else dots+=`<circle cx="${x}" cy="${y}" r="${r}"/>`}
+  return `<div class="pg r" style="--i:${gi+1}"><svg viewBox="0 0 ${cols*c} ${rows*c}" role="img" aria-label="${esc(g.label)}"><defs>${defs}</defs><g class="dg" fill="var(--ln)">${dots}</g><g class="hi">${hi}</g></svg><div class="pc"><b class="pn">${esc(g.label)}</b><span>${esc(g.cap||'')}</span></div></div>`}).join('')}</div>`}
+function branch(s){return `<div class="bz">${R(esc(s.root),0,'div','rt')}<svg viewBox="0 0 200 100" aria-hidden="true">${s.br.map((b,i)=>{const n=s.br.length,x=n===1?100:30+140*i/(n-1);return `<path d="M100 4 C 100 54, ${x} 46, ${x} 96" stroke="${b.c||'var(--ac)'}" stroke-width="${b.w}" pathLength="1" style="--i:${i}"/>`}).join('')}</svg><div class="lv" style="grid-template-columns:repeat(${s.br.length},1fr)">${s.br.map((b,i)=>R(`<b>${esc(b.l)}</b><span>${esc(b.sub||'')}</span>`,i+3)).join('')}</div></div>`}
+function scale(s){const[l,rr]=s.sides;return `<div class="sc2"><svg viewBox="0 0 200 110" aria-hidden="true"><path d="M100 30 L88 100 L112 100 Z" fill="var(--ln)"/><g class="beam" style="--tilt:${s.tilt||-8}deg"><line x1="20" y1="30" x2="180" y2="30" stroke="var(--fg)" stroke-width="3" stroke-linecap="round"/><path d="M20 30 L8 62 M20 30 L32 62 M180 30 L168 62 M180 30 L192 62" stroke="var(--fg2)" stroke-width="1.2" fill="none"/><path d="M4 62 Q20 76 36 62 Z" fill="var(--ac)"/><path d="M164 62 Q180 76 196 62 Z" fill="var(--ac2)"/></g></svg><div class="lv">${R(`<b>${esc(l.l)}</b><span>${esc(l.sub)}</span>`,1)}${R(`<b>${esc(rr.l)}</b><span>${esc(rr.sub)}</span>`,2)}</div></div>`}
+function timeline(s){return `<div class="tl"><div class="tln r" style="--i:0"><i></i></div><ol>${s.pts.map((p,i)=>`<li class="r" style="--i:${i+1}"><span class="dt"></span><b>${esc(p.l)}</b></li>`).join('')}</ol></div>`}
+function eye(s){const mk=(spread,n,seed,rad,label,gi)=>{const f=rng(seed);let pts=[],pl='',dots='';
+  for(let k=0;k<n;k++){const a=f()*6.283,d=Math.sqrt(f())*spread,x=Math.max(20,Math.min(180,100+Math.cos(a)*d)),y=Math.max(24,Math.min(176,92+Math.sin(a)*d*1.1));pts.push([x,y])}
+  pl=pts.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ');
+  dots=pts.map((p,k)=>`<circle class="fx" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${rad}" fill="var(--ac)" fill-opacity=".85" style="--d:${k*150}"/>`).join('');
+  return `<div class="ey r" style="--i:${gi+1}"><svg viewBox="0 0 200 200" role="img" aria-label="${esc(label)}"><rect x="2" y="2" width="196" height="196" rx="18" fill="var(--tr)" stroke="var(--ln)"/><circle cx="100" cy="82" r="34" fill="none" stroke="var(--ln)" stroke-width="2"/><path d="M40 190 Q100 118 160 190" fill="none" stroke="var(--ln)" stroke-width="2"/><polyline class="sp" points="${pl}" pathLength="1" fill="none" stroke="var(--ac)" stroke-width="1.6" stroke-opacity=".7"/>${dots}</svg><b>${esc(label)}</b></div>`};
+  return `<div class="eyes">${mk(26,7,3,4,s.a,0)}${mk(78,12,9,7,s.b,1)}</div>`}
+function shift(s){return `<div class="sh">${s.items.map((it,i)=>`<div class="shc r" style="--i:${i+1}"><div class="sht"><div class="gh" style="height:${it.f}%"></div><div class="nw" style="--f:${it.f}%;--t:${it.t}%;--c:${it.c==='ac2'?'var(--ac2)':'var(--ac)'}"></div></div><b>${esc(it.l)}</b></div>`).join('')}</div>`}
+function stairs(s){const n=s.steps.length;return `<div class="st">${s.steps.map((p,i)=>`<div class="stp r" style="--i:${i+1};--h:${36+i*(60/Math.max(1,n-1))}%">${esc(p.l)}</div>`).join('')}</div>`}
+function loop(s){const n=s.nodes.length,cx=320,cy=180,rx=215,ry=130;
+  const path=`M${cx-rx} ${cy} a${rx} ${ry} 0 1 1 ${2*rx} 0 a${rx} ${ry} 0 1 1 ${-2*rx} 0`;
+  const nodes=s.nodes.map((t,k)=>{const a=(-90+k*360/n)*Math.PI/180,x=cx+rx*Math.cos(a),y=cy+ry*Math.sin(a);
+    const sp=[...t].map((c,j)=>c===' '?j:-1).filter(j=>j>=0).sort((a,b)=>Math.abs(a-t.length/2)-Math.abs(b-t.length/2))[0],parts=t.length>7&&sp!==undefined?[t.slice(0,sp),t.slice(sp+1)]:[t];
+    const tx=parts.map((p,j)=>`<tspan x="${x.toFixed(1)}" dy="${j?22:(parts.length>1?-2:7)}">${esc(p)}</tspan>`).join('');
+    return `<g class="nd" style="--d:${k*350}"><rect x="${(x-85).toFixed(1)}" y="${(y-30).toFixed(1)}" width="170" height="60" rx="16" fill="var(--tr)" stroke="${k===s.hl?'var(--ac)':'var(--ln)'}" stroke-width="${k===s.hl?2:1}"/><text x="${x.toFixed(1)}" y="${(y-(parts.length>1?8:0)).toFixed(1)}" fill="var(--fg)" font-size="19" font-weight="600" text-anchor="middle">${tx}</text></g>`}).join('');
+  return `<div class="lp"><svg viewBox="0 0 640 360" role="img" aria-label="${esc(s.nodes.join(' → '))}"><path class="rg" d="${path}" pathLength="1" fill="none" stroke="var(--ln)" stroke-width="2"/>${nodes}<circle r="6" fill="var(--ac)"><animateMotion dur="9s" repeatCount="indefinite" path="${path}"/></circle></svg></div>`}
+const ILL={pict,branch,scale,timeline,eye,shift,stairs,loop};
+
+/* ---- slide types ---- */
+const T={
+ title:s=>`<div class="in c">${kick(s,0)}<h1>${words(s.h,1)}</h1>${s.sub?R(esc(s.sub),6,'p','sub'):''}${s.badge?R(`<span class="pill">${esc(s.badge)}</span>`,7):''}</div>`,
+ say:s=>`<div class="in c"><h2>${words(s.h)}</h2>${s.sub?R(esc(s.sub),5,'p','sub'):''}</div>`,
+ num:s=>`<div class="in c">${kick(s,0)}${R(`<span class="big" data-to="${s.n}" data-dec="${s.dec||0}" data-pre="${esc(s.pre||'')}">${esc(s.pre||'')}${s.n}</span><span class="unit">${esc(s.unit||'')}</span>`,1)}${R(esc(s.label),2,'p','sub')}${s.note?R(esc(s.note),3,'p','note'):''}</div>`,
+ bars:s=>`<div class="in">${kick(s,0)}${s.h?R(esc(s.h),0,'h3'):''}<div class="bars">${s.rows.map((r,i)=>`<div class="br r" style="--i:${i+1}"><span class="bl">${esc(r.l)}</span><div class="bar"><i style="--w:${(r.v/s.max*100).toFixed(2)}%;--c:${r.c||'var(--ac)'};--i:${i}"></i></div><b class="bv">${esc(r.show)}</b></div>`).join('')}</div>${s.note?R(esc(s.note),5,'p','note'):''}</div>`,
+ chart:s=>`<div class="in">${kick(s,0)}${R(esc(s.h),0,'h3')}<div class="cw r ${s.kind==='doughnut'?'sq':''}" style="--i:1"><canvas role="img" aria-label="${esc(s.h)}"></canvas></div>${s.note?R(esc(s.note),3,'p','note'):''}</div>`,
+ pts:s=>T.flow(Object.assign({na:1},s)),
+ flow:s=>`<div class="in c">${kick(s,0)}${R(esc(s.h),0,'h3')}<div class="fl${s.na?" na":""}">${s.steps.map((p,i)=>`${i&&!s.na?`<span class="ar r" style="--i:${i+1}">→</span>`:''}<div class="fs r" style="--i:${i+1}"><b>${esc(p.t)}</b><span>${esc(p.d||'')}</span></div>`).join('')}</div>${s.note?R(esc(s.note),5,'p','note'):''}</div>`,
+ cmp:s=>`<div class="in">${R(esc(s.h),0,'h3')}<div class="cmp">${[s.l,s.r].map((p,pi)=>`<div class="cp ${pi?'no':'yes'} r" style="--i:${pi+1}"><h4>${esc(p.h)}</h4><ul>${p.items.map((t,k)=>`<li class="r" style="--i:${pi*3+k+2}">${esc(t)}</li>`).join('')}</ul></div>`).join('')}</div></div>`,
+ chk:s=>`<div class="in">${kick(s,0)}${R(esc(s.h),0,'h3')}<div class="cks">${s.rows.map((r,i)=>`<div class="ck r" style="--i:${i+1}"><span class="mk ${r.m==='n'?'n':''}" style="--i:${i+1}">${r.m==='n'?'✕':'✓'}</span><div><b>${esc(r.t)}</b>${r.s?`<span class="s">${esc(r.s)}</span>`:''}</div></div>`).join('')}</div>${s.note?R(esc(s.note),6,'p','note'):''}</div>`,
+ ill:s=>`<div class="in">${kick(s,0)}${R(esc(s.h),0,'h3')}${ILL[s.kind](s)}${cap(s,6)}</div>`,
+ src:s=>`<div class="in sc">${R('출처',0,'h3')}${R(esc(s.ref),1,'p','ref')}${R(esc(s.status),2,'p','note')}${s.post?R(`<a href="${esc(s.post)}" target="_blank" rel="noopener">블로그 원본 글 보기 →</a>`,3,'p'):''}${R('인포그래픽 제작: donghunc.kr | AI 활용 블로그',4,'p','note')}</div>`
+};
+
+/* ---- charts (Chart.js) ---- */
+const vl={id:'vl',afterDatasetsDraw(ch){const o=ch.options.plugins&&ch.options.plugins.vl;if(!o)return;const x=ch.ctx;x.save();x.fillStyle=o.color;x.font='700 '+o.size+'px '+o.font;x.textBaseline='middle';
+  ch.data.datasets.forEach((d,di)=>{const m=ch.getDatasetMeta(di);m.data.forEach((b,i)=>{const t=d.show&&d.show[i];if(!t)return;
+    if(ch.options.indexAxis==='y'){x.textAlign='left';x.fillText(t,b.x+10,b.y)}else{x.textAlign='center';x.fillText(t,b.x,d.data[i]<0?b.y+16:b.y-14)}})});x.restore()}};
+function mkChart(cv,s,slide){if(typeof Chart==='undefined')return;
+  const cs=getComputedStyle(document.documentElement),col=k=>(cs.getPropertyValue('--'+k).trim()||k),font='Pretendard Variable, Pretendard, sans-serif';
+  const dn=s.kind==='doughnut';
+  const ds=s.datasets.map(d=>({label:d.label,data:d.data,show:d.show,backgroundColor:Array.isArray(d.c)?d.c.map(col):col(d.c||'ac'),borderWidth:0,borderRadius:dn?0:8,borderSkipped:false,barPercentage:.6,categoryPercentage:.8}));
+  const hz=s.axis==='y',val=hz?'x':'y',cat=hz?'y':'x';
+  const opt={responsive:true,maintainAspectRatio:false,animation:{duration:RM?0:1800,easing:'easeOutQuart'},indexAxis:s.axis||'x',layout:{padding:{top:24,right:hz?70:8}},
+    plugins:{legend:{display:!!s.legend,position:'bottom',labels:{color:col('fg2'),font:{family:font,size:14},usePointStyle:true,padding:18}},tooltip:{enabled:true,backgroundColor:col('tr'),titleColor:col('fg'),bodyColor:col('fg2'),borderColor:col('ln'),borderWidth:1,titleFont:{family:font},bodyFont:{family:font}},vl:{color:col('fg'),size:17,font}}};
+  if(dn){opt.cutout='76%';opt.layout={padding:8};opt.plugins.vl=undefined}
+  else{opt.scales={[cat]:{grid:{display:false},border:{display:false},ticks:{color:col('fg2'),font:{family:font,size:14}}},[val]:{display:false,min:s.min||0,max:s.max}}}
+  const c=new Chart(cv,{type:s.kind==='line'?'line':(dn?'doughnut':'bar'),data:{labels:s.labels,datasets:ds},options:opt,plugins:[vl]});
+  (slide._ch=slide._ch||[]).push(c)}
+
+/* ---- count up ---- */
+const fmt=(v,d)=>v.toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d});
+function count(el){const to=+el.dataset.to,d=+el.dataset.dec,pre=el.dataset.pre||'';if(RM){el.textContent=pre+fmt(to,d);return}
+  const t0=performance.now(),dur=1800;el.textContent=pre+fmt(0,d);
+  (function f(t){const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,4);el.textContent=pre+fmt(to*e,d);if(p<1)requestAnimationFrame(f)})(t0)}
+
+/* ---- build + navigate ---- */
+const deck=$('#deck');
+deck.innerHTML=D.slides.map((s,i)=>{SI=i;return `<section class="slide" aria-hidden="true" aria-label="${i+1} / ${D.slides.length}">${T[s.t](s)}</section>`}).join('');
+const sl=$$('.slide',deck),N=sl.length;let cur=-1,timer=null;
+const ap=$('#ap');
+function enter(s,i){$$('.big[data-to]',s).forEach(count);$$('canvas',s).forEach(cv=>mkChart(cv,D.slides[i],s))}
+function leave(s){(s._ch||[]).forEach(c=>c.destroy());s._ch=[]}
+function go(i){i=Math.max(0,Math.min(N-1,i));if(i===cur)return;
+  if(cur>=0){sl[cur].classList.remove('on');sl[cur].setAttribute('aria-hidden','true');leave(sl[cur])}
+  cur=i;sl[i].classList.add('on');sl[i].setAttribute('aria-hidden','false');sl[i].scrollTop=0;enter(sl[i],i);
+  $('#pg i').style.width=((i+1)/N*100)+'%';$('#ct').textContent=(i+1)+' / '+N;
+  try{history.replaceState(null,'','#'+(i+1))}catch(e){}
+  if(i===N-1)stop()}
+const next=()=>go(cur+1),prev=()=>go(cur-1);
+function stop(){if(timer){clearInterval(timer);timer=null}ap.setAttribute('aria-pressed','false');ap.textContent='▶ 자동 재생'}
+function play(){stop();ap.setAttribute('aria-pressed','true');ap.textContent='❚❚ 정지';if(cur>=N-1)go(0);timer=setInterval(()=>{if(cur>=N-1)stop();else next()},12000)}
+ap.addEventListener('click',e=>{e.stopPropagation();timer?stop():play()});
+document.addEventListener('keydown',e=>{const k=e.key;
+  if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Enter'){if(e.target===ap)return;e.preventDefault();next()}
+  else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();prev()}
+  else if(k==='Home')go(0);else if(k==='End')go(N-1);
+  else if(k==='a'||k==='A')timer?stop():play()});
+deck.addEventListener('click',e=>{if(e.target.closest('a'))return;(e.clientX<innerWidth*.3)?prev():next()});
+let tx=null;deck.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+deck.addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>50){dx<0?next():prev()}});
+const h=parseInt((location.hash||'').slice(1),10);
+requestAnimationFrame(()=>requestAnimationFrame(()=>{go(h>0&&h<=N?h-1:0);if(!RM&&!h)play()}));
+})();
+</script></body></html>
